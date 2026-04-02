@@ -297,6 +297,31 @@ services:
     networks:
       - default
 
+    go:
+      build:
+        context: ./services/go
+        args:
+          GO_VERSION: ${GO_VERSION}
+          TZ: "$TZ"
+          GOPROXY: "${GO_PROXY}"
+      container_name: go
+      expose:
+        - "9000"
+      ports:
+        - "${GO_HOST_PORT}:9000"
+      volumes:
+        - ${SOURCE_DIR}:/www/:rw
+        - ${GO_APP_DIR}:/www/goapp/:rw
+        - ${GO_LOG_DIR}:/var/log/go/:rw
+      working_dir: /www
+      stdin_open: true
+      tty: true
+      restart: always
+      networks:
+        - default
+      depends_on:
+        - nginx
+
 #  rabbitmq:
 #    build:
 #      context: ./services/rabbitmq
