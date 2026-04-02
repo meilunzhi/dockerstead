@@ -18,26 +18,26 @@ services:
     networks:
       - default
 
-  #  openresty:
-  #    build:
-  #      context: ./services/openresty
-  #    image:  openresty/openresty:${OPENRESTY_VERSION}
-  #    container_name: openresty
-  #    ports:
-  #       - "${OPENRESTY_HTTP_HOST_PORT}:80"
-  #       - "${OPENRESTY_HTTPS_HOST_PORT}:443"
-  #    volumes:
-  #       - ${SOURCE_DIR}:/www/:rw
-  #       - ${OPENRESTY_CONFD_DIR}:/etc/nginx/conf.d/:ro
-  #       - ${OPENRESTY_SSL_CERTIFICATE_DIR}:/ssl:rw
-  #       - ${OPENRESTY_CONF_FILE}:/usr/local/openresty/nginx/conf/nginx.conf:ro
-  #       - ${OPENRESTY_FASTCGI_PHP_CONF}:/usr/local/openresty/nginx/conf/fastcgi-php.conf:ro
-  #       - ${OPENRESTY_CONF_FASTCGIPARAMS_FILE}:/usr/local/openresty/nginx/conf/fastcgi_params:ro
-  #       - ${OPENRESTY_LOG_DIR}:/var/log/nginx/:rw
-  #    environment:
-  #      TZ: "$TZ"
-  #    networks:
-  #      - default
+#  openresty:
+#    build:
+#      context: ./services/openresty
+#    image:  openresty/openresty:${OPENRESTY_VERSION}
+#    container_name: openresty
+#    ports:
+#       - "${OPENRESTY_HTTP_HOST_PORT}:80"
+#       - "${OPENRESTY_HTTPS_HOST_PORT}:443"
+#    volumes:
+#       - ${SOURCE_DIR}:/www/:rw
+#       - ${OPENRESTY_CONFD_DIR}:/etc/nginx/conf.d/:ro
+#       - ${OPENRESTY_SSL_CERTIFICATE_DIR}:/ssl:rw
+#       - ${OPENRESTY_CONF_FILE}:/usr/local/openresty/nginx/conf/nginx.conf:ro
+#       - ${OPENRESTY_FASTCGI_PHP_CONF}:/usr/local/openresty/nginx/conf/fastcgi-php.conf:ro
+#       - ${OPENRESTY_CONF_FASTCGIPARAMS_FILE}:/usr/local/openresty/nginx/conf/fastcgi_params:ro
+#       - ${OPENRESTY_LOG_DIR}:/var/log/nginx/:rw
+#    environment:
+#      TZ: "$TZ"
+#    networks:
+#      - default
 
   #  php85:
   #    build:
@@ -297,31 +297,6 @@ services:
     networks:
       - default
 
-  go:
-    build:
-      context: ./services/go
-      args:
-        GO_VERSION: ${GO_VERSION}
-        TZ: "$TZ"
-        GOPROXY: "${GO_PROXY}"
-    container_name: go
-    expose:
-      - "9000"
-    ports:
-      - "${GO_HOST_PORT}:9000"
-    volumes:
-      - ${SOURCE_DIR}:/www/:rw
-      - ${GO_APP_DIR}:/www/goapp/:rw
-      - ${GO_LOG_DIR}:/var/log/go/:rw
-    working_dir: /www
-    stdin_open: true
-    tty: true
-    restart: always
-    networks:
-      - default
-    depends_on:
-      - nginx
-
 #  rabbitmq:
 #    build:
 #      context: ./services/rabbitmq
@@ -457,6 +432,31 @@ services:
 #      - default
 #    stdin_open: true
 #    tty: true
+
+#  go:
+#    build:
+#      context: ./services/go
+#      args:
+#        GO_VERSION: ${GO_VERSION}
+#        TZ: "$TZ"
+#        GOPROXY: "${GO_PROXY}"
+#    container_name: go
+#    expose:
+#      - "9000"
+#    ports:
+#      - "${GO_HOST_PORT}:9000"
+#    volumes:
+#      - ${SOURCE_DIR}:/www/:rw
+#      - ${GO_APP_DIR}:/www/goapp/:rw
+#      - ${GO_LOG_DIR}:/var/log/go/:rw
+#    working_dir: /www
+#    stdin_open: true
+#    tty: true
+#    restart: always
+#    networks:
+#      - default
+#    depends_on:
+#      - nginx
 
 
 #  supervisor:

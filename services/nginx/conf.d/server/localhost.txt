@@ -1,0 +1,202 @@
+server {
+    listen 80;
+    listen 8085;
+    listen 443 ssl;
+
+    server_name  api.ycs.testing;
+    root   /www/ycsAuto/public;
+    index  index.php index.html index.htm;
+    charset utf8;
+    client_max_body_size 100M;
+    access_log /dev/null;
+    error_log  /var/log/nginx/nginx.ycs.error.log  warn;
+    error_page   500 502 503 504  /50x.html;
+    #thinkphp
+    location / {
+        if (!-e $request_filename) {
+            rewrite  ^(.*)$  /index.php?s=/$1  last;
+            break;
+        }
+    }
+    #fastadmin
+    location ~ /addons/.*$ {
+        if (!-e $request_filename) {
+            rewrite ^/addons/(.*)$ /index.php/ajax/execution?name=$1 last;
+        }
+    }
+
+    location = /favicon.ico {
+        access_log off;
+        log_not_found off;
+    }
+
+    location = /robots.txt  {
+        access_log off;
+        log_not_found off;
+    }
+    # 隐藏版本号
+    server_tokens off;
+    # 安全头
+    add_header X-Frame-Options "SAMEORIGIN" always;
+    add_header X-Content-Type-Options "nosniff" always;
+    add_header X-XSS-Protection "1; mode=block" always;
+    add_header Referrer-Policy "strict-origin-when-cross-origin" always;
+
+    location = /50x.html {
+        root   /usr/share/nginx/html;
+    }
+
+    location ~ [^/]\.php(/|$) {
+        # ============ 路径解析 ============
+        fastcgi_split_path_info ^(.+\.php)(/.+)$;
+        # ============ PHP-FPM 连接 ============
+        fastcgi_pass php74:9000;
+        # ============ 脚本验证 ============
+        try_files $fastcgi_script_name =404;
+        # ============ PATH_INFO 传递 ============
+        set $path_info $fastcgi_path_info;
+        fastcgi_param PATH_INFO $path_info;  # ✅ 启用 PATH_INFO
+        # ============ 核心脚本参数 ============
+        fastcgi_index index.php;
+        fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;
+        # ============ 请求参数 ============
+        fastcgi_param QUERY_STRING       $query_string;
+        fastcgi_param REQUEST_METHOD     $request_method;
+        fastcgi_param CONTENT_TYPE       $content_type;
+        fastcgi_param CONTENT_LENGTH     $content_length;
+        fastcgi_param SCRIPT_NAME         $fastcgi_script_name;
+        fastcgi_param REQUEST_URI        $request_uri;
+        fastcgi_param DOCUMENT_URI       $document_uri;
+        fastcgi_param DOCUMENT_ROOT      $document_root;
+        fastcgi_param SERVER_PROTOCOL    $server_protocol;
+        fastcgi_param REQUEST_SCHEME     $scheme;
+        fastcgi_param HTTPS              $https if_not_empty;
+        fastcgi_param GATEWAY_INTERFACE  CGI/1.1;
+        fastcgi_param SERVER_SOFTWARE    nginx/$nginx_version;
+        fastcgi_param REMOTE_ADDR        $remote_addr;
+        fastcgi_param REMOTE_PORT        $remote_port;
+        fastcgi_param SERVER_ADDR        $server_addr;
+        fastcgi_param SERVER_PORT        $server_port;
+        fastcgi_param SERVER_NAME        $server_name;
+        fastcgi_param REDIRECT_STATUS    200;
+        # ============ 超时配置（合理值） ============
+        fastcgi_connect_timeout 60s;
+        fastcgi_send_timeout 120s;
+        fastcgi_read_timeout 300s;      # 300s 足够，大部分场景不需要 3600s
+        # ============ 缓冲区配置 ============
+        fastcgi_buffering on;
+        fastcgi_buffer_size 32k;
+        fastcgi_buffers 8 32k;
+        fastcgi_max_temp_file_size 1024m;
+        # ============ 错误处理 ============
+        fastcgi_intercept_errors on;
+    }
+
+    # 禁止访问隐藏文件
+    location ~ /\. {
+        deny all;
+        access_log off;
+        log_not_found off;
+    }
+
+    # 静态资源缓存
+    location ~* \.(js|css|png|jpg|jpeg|gif|ico|svg|woff|woff2|ttf|eot)$ {
+        expires 30d;
+        add_header Cache-Control "public, immutable";
+        access_log off;
+    }
+}
+
+
+server {
+    server_name  localhost;
+    listen       80 default_server;
+
+    root   /www/localhost;
+    index  index.php index.html index.htm;
+    #charset koi8-r;
+
+    access_log /dev/null;
+    #access_log  /var/log/nginx/nginx.localhost.access.log  main;
+    error_log  /var/log/nginx/nginx.localhost.error.log  warn;
+
+    #error_page  404              /404.html;
+
+    # redirect server error pages to the static page /50x.html
+    #
+    error_page   500 502 503 504  /50x.html;
+    location = /50x.html {
+        root   /usr/share/nginx/html;
+    }
+
+    # proxy the PHP scripts to Apache listening on 127.0.0.1:80
+    #
+    #location ~ \.php$ {
+    #    proxy_pass   http://127.0.0.1;
+    #}
+
+    # pass the PHP scripts to FastCGI server listening on 127.0.0.1:9000
+    #
+    location ~ [^/]\.php(/|$) {
+        fastcgi_pass   php82:9000;
+        include        fastcgi-php.conf;
+        include        fastcgi_params;
+    }
+
+    # deny access to .htaccess files, if Apache's document root
+    # concurs with nginx's one
+    #
+    #location ~ /\.ht {
+    #    deny  all;
+    #}
+}
+
+server {
+    server_name  localhost;
+    listen 443 ssl default_server;
+
+    root   /www/localhost;
+    index  index.php index.html index.htm;
+    #charset koi8-r;
+
+    access_log /dev/null;
+    #access_log  /var/log/nginx/nginx.localhost.access.log  main;
+    error_log  /var/log/nginx/nginx.localhost.error.log  warn;
+
+    #error_page  404              /404.html;
+
+    ssl_certificate /ssl/localhost/localhost.crt;
+    ssl_certificate_key /ssl/localhost/localhost.key;
+
+    # redirect server error pages to the static page /50x.html
+    #
+    error_page   500 502 503 504  /50x.html;
+    location = /50x.html {
+        root   /usr/share/nginx/html;
+    }
+
+    # proxy the PHP scripts to Apache listening on 127.0.0.1:80
+    #
+    #location ~ \.php$ {
+    #    proxy_pass   http://127.0.0.1;
+    #}
+
+    # pass the PHP scripts to FastCGI server listening on 127.0.0.1:9000
+    #
+    location ~ [^/]\.php(/|$) {
+        fastcgi_pass   php82:9000;
+        include        fastcgi-php.conf;
+        include        fastcgi_params;
+    }
+
+    # deny access to .htaccess files, if Apache's document root
+    # concurs with nginx's one
+    #
+    #location ~ /\.ht {
+    #    deny  all;
+    #}
+}
+
+
+
+

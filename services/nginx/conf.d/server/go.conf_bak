@@ -1,0 +1,65 @@
+server {
+    listen 80;
+    listen 8088;
+    listen 443 ssl;
+
+    server_name  go.ycs.testing;
+    root   /www/goapp;
+    index  index.html index.htm;
+    charset utf-8;
+    client_max_body_size 100M;
+    access_log /dev/null;
+    error_log  /var/log/nginx/nginx.go.error.log  warn;
+
+    # Nginx reverse proxy to Go app
+    location / {
+        proxy_pass http://go:9000;
+        proxy_http_version 1.1;
+
+        # Proxy headers
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header X-Forwarded-Proto $scheme;
+
+        # Proxy timeouts
+        proxy_connect_timeout 60s;
+        proxy_send_timeout 60s;
+        proxy_read_timeout 60s;
+
+        # Disable buffering for streaming
+        proxy_buffering off;
+    }
+
+    # Health check endpoint
+    location /health {
+        proxy_pass http://go:9000/health;
+        proxy_http_version 1.1;
+        proxy_set_header Host $host;
+        access_log off;
+    }
+
+    # Static files (if served by Go)
+    location /static/ {
+        proxy_pass http://go:9000/static/;
+        proxy_http_version 1.1;
+        proxy_set_header Host $host;
+        expires 30d;
+        add_header Cache-Control "public, immutable";
+    }
+
+    # WebSocket support (if needed)
+    location /ws {
+        proxy_pass http://go:9000/ws;
+        proxy_http_version 1.1;
+        proxy_set_header Upgrade $http_upgrade;
+        proxy_set_header Connection "upgrade";
+        proxy_set_header Host $host;
+        proxy_read_timeout 86400;
+    }
+
+    error_page 500 502 503 504 /50x.html;
+    location = /50x.html {
+        root /usr/share/nginx/html;
+    }
+}
