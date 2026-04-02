@@ -1,6 +1,5 @@
 ARG GO_VERSION
-#FROM golang:${GO_VERSION}-alpine
-FROM golang:${GO_VERSION}
+FROM golang:${GO_VERSION}-alpine
 
 ARG TZ
 ARG GOPROXY=https://goproxy.cn,direct
