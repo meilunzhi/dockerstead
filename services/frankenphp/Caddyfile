@@ -1,0 +1,33 @@
+{
+    # FrankenPHP 配置
+    frankenphp
+    https_port 443
+    http_port 80
+    # 自动 HTTPS
+    auto_https off
+    # 调试模式
+    debug
+    # 日志
+    log {
+        level DEBUG
+        output file /var/log/caddy/access.log
+    }
+}
+
+# ============================================
+# 多项目多域名配置
+# ============================================
+
+# Laravel 项目 - local.laravel-api.testing
+local.laravel-api.testing:80 {
+    root * /www/laravel/public
+    php_server
+    encode gzip
+}
+
+# 默认站点 - 处理所有未匹配的域名
+:80, :8080 {
+    root * /www
+    php_server
+    file_server browse
+}
