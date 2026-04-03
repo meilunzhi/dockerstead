@@ -1,31 +1,41 @@
 ARG PHP_VERSION
-FROM php:8.2-fpm
+FROM ${PHP_VERSION}
 
 ARG TZ
 ARG PHP_EXTENSIONS
-ARG DEBIAN_MIRROR_DOMAIN
+ARG CONTAINER_PACKAGE_URL
+ARG COMPOSER_URL
 
-ENV TZ=${TZ}
+RUN if [ "${CONTAINER_PACKAGE_URL}" != "" ] ; then sed -i "s/dl-cdn.alpinelinux.org/${CONTAINER_PACKAGE_URL}/g" /etc/apk/repositories ; fi
 
-# Set debian mirror
-RUN sed -i "s|deb.debian.org|${DEBIAN_MIRROR_DOMAIN}|g" /etc/apt/sources.list.d/debian.sources
+COPY ./extensions /tmp/extensions
+WORKDIR /tmp/extensions
 
-# Install required packages
-RUN export option="--no-install-recommends -y" \
-    && apt-get $option update \
-    && apt-get $option install tzdata curl
+RUN chmod +x install.sh \
+    && sh install.sh \
+    && rm -rf /tmp/extensions
 
-# Clean up the package list to reduce image size
-RUN apt-get clean && rm -rf /var/lib/apt/lists/*
+ADD ./extensions/install-php-extensions  /usr/local/bin/
 
-# Install PHP extensions
-RUN curl -sSLf -o /usr/local/bin/install-php-extensions https://github.com/mlocati/docker-php-extension-installer/releases/latest/download/install-php-extensions \
-&& chmod +x /usr/local/bin/install-php-extensions \
-&& install-php-extensions $PHP_EXTENSIONS
+RUN chmod uga+x /usr/local/bin/install-php-extensions
+
+RUN apk --no-cache add tzdata \
+    && cp "/usr/share/zoneinfo/$TZ" /etc/localtime \
+    && echo "$TZ" > /etc/timezone
+
+
+# Fix: https://github.com/docker-library/php/issues/240
+RUN apk add gnu-libiconv libstdc++ --no-cache --repository http://${CONTAINER_PACKAGE_URL}/alpine/edge/community/ --allow-untrusted
+ENV LD_PRELOAD /usr/lib/preloadable_libiconv.so php
+
 
 # Install composer and change it's cache home
-RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
+RUN curl -o /usr/bin/composer https://${COMPOSER_URL}/composer/composer.phar \
+    && chmod +x /usr/bin/composer
 ENV COMPOSER_HOME=/tmp/composer
 
-# Set work directory
+# php image's www-data user uid & gid are 82, change them to 1000 (primary user)
+RUN apk --no-cache add shadow && usermod -u 1000 www-data && groupmod -g 1000 www-data
+
+
 WORKDIR /www
