@@ -495,7 +495,7 @@ if [[ -z "${EXTENSIONS##*,mysql,*}" ]]; then
     isPhpVersionGreaterOrEqual 8 0
 
     if [[ "$?" = "1" ]]; then
-        echo "---------- mysql was REMOVED from PHP 8.0.0 ----------"
+        echo "---------- mysql was REMOVED from PHP 8.4.0 ----------"
     else
         echo "---------- Install mysql ----------"
         docker-php-ext-install ${MC} mysql
@@ -556,7 +556,7 @@ fi
 
 if [[ -z "${EXTENSIONS##*,xdebug,*}" ]]; then
     echo "---------- Install xdebug ----------"
-    installExtensionFromTgz xdebug-3.2.0
+    installExtensionFromTgz xdebug-3.5.1
 fi
 
 if [[ -z "${EXTENSIONS##*,event,*}" ]]; then
