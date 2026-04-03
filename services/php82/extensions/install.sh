@@ -556,7 +556,7 @@ fi
 
 if [[ -z "${EXTENSIONS##*,xdebug,*}" ]]; then
     echo "---------- Install xdebug ----------"
-    installExtensionFromTgz xdebug-3.2.0
+    installExtensionFromTgz xdebug-3.5.1
 fi
 
 if [[ -z "${EXTENSIONS##*,event,*}" ]]; then

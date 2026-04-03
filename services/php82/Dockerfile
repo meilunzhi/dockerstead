@@ -1,5 +1,5 @@
 ARG PHP_VERSION
-FROM ${PHP_VERSION}
+FROM php:8.2.30-fpm-alpine
 
 ARG TZ
 ARG PHP_EXTENSIONS
@@ -25,7 +25,7 @@ RUN apk --no-cache add tzdata \
 
 
 # Fix: https://github.com/docker-library/php/issues/240
-RUN apk add gnu-libiconv libstdc++ --no-cache --repository http://${CONTAINER_PACKAGE_URL}/alpine/edge/community/ --allow-untrusted
+RUN apk add gnu-libiconv libstdc++ --no-cache --repository https://${CONTAINER_PACKAGE_URL}/alpine/edge/community/ --allow-untrusted
 ENV LD_PRELOAD /usr/lib/preloadable_libiconv.so php
 
 
