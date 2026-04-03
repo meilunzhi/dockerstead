@@ -4,15 +4,15 @@ FROM dunglas/frankenphp:1.12.1-php8.3
 ENV TZ=Asia/Shanghai
 
 # 安装常用扩展
-RUN apt-get update && apt-get install -y \
-    bash \
-    openssl \
-    ca-certificates \
-    curl \
+RUN install-php-extensions \
+    gd \
+    pdo_mysql \
+    redis \
     zip \
-    unzip \
-    git \
-    && rm -rf /var/lib/apt/lists/*
+    swoole \
+    mongodb \
+    memcached \
+    memcache
 
 # 工作目录
 WORKDIR /www

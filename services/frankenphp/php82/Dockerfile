@@ -18,7 +18,7 @@ RUN apt-get update && apt-get install -y \
 WORKDIR /www
 
 # 暴露端口
-EXPOSE 80 443 8080 80443
+EXPOSE 80 443 8082 8042
 
 # 启动 FrankenPHP 服务器
 ENTRYPOINT []
