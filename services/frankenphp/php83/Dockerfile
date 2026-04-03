@@ -14,6 +14,10 @@ RUN install-php-extensions \
     memcached \
     memcache
 
+RUN curl -o /usr/bin/composer https://getcomposer.org/download/2.9.5/composer.phar \
+    && chmod +x /usr/bin/composer
+ENV COMPOSER_HOME=/tmp/composer
+
 # 工作目录
 WORKDIR /www
 
