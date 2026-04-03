@@ -17,9 +17,7 @@
 # ============================================
 # 多项目多域名配置
 # ============================================
-
-# Laravel 项目
-:80 {
+local.laravel-api.testing:8083 {
     root * /www/laravel/public
     php_server
     encode gzip
