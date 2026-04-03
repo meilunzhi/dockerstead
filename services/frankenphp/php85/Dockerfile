@@ -13,7 +13,16 @@ RUN apt-get update && apt-get install -y \
     zip \
     unzip \
     git \
+    libssl-dev \
+    libsasl2-dev \
+    libcurl4-openssl-dev \
+    libxml2-dev \
     && rm -rf /var/lib/apt/lists/*
+
+# 安装 PHP 扩展
+RUN pecl install redis xdebug mongodb \
+    && docker-php-ext-enable redis xdebug mongodb \
+    && docker-php-ext-install pdo_mysql mysqli opcache
 
 # 工作目录
 WORKDIR /www
