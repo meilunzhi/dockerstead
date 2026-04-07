@@ -1,0 +1,100 @@
+# =============================================
+# 以管理员身份 - 强制重建 WSL
+# =============================================
+
+Write-Host "========================================" -ForegroundColor Red
+Write-Host "  强制重建 WSL 和 Docker" -ForegroundColor Red
+Write-Host "========================================" -ForegroundColor Red
+
+# 1. 停止所有服务（强制）
+Write-Host "[1/10] 强制停止..." -ForegroundColor Yellow
+Stop-Process -Name "Docker Desktop" -Force -ErrorAction SilentlyContinue
+Stop-Process -Name "Docker" -Force -ErrorAction SilentlyContinue
+Stop-Process -Name "com.docker.service" -Force -ErrorAction SilentlyContinue
+taskkill /F /IM wsl.exe 2>$null
+taskkill /F /IM wslhost.exe 2>$null
+wsl --shutdown 2>$null
+net stop com.docker.service 2>$null
+Start-Sleep -Seconds 10
+
+# 2. 注销并删除所有 WSL 发行版
+Write-Host "[2/10] 注销所有 WSL 发行版..." -ForegroundColor Yellow
+$wslList = wsl --list --all 2>$null
+if ($wslList) {
+    $wslList | ForEach-Object {
+        if ($_ -match "^  ([^\s]+)") {
+            $name = $matches[1]
+            Write-Host "  注销: $name" -ForegroundColor Gray
+            wsl --unregister $name 2>$null
+        }
+    }
+}
+
+# 3. 停止 WSL 服务
+Write-Host "[3/10] 停止 WSL 服务..." -ForegroundColor Yellow
+net stop LxssManager 2>$null
+Start-Sleep -Seconds 3
+
+# 4. 删除所有 WSL 相关文件
+Write-Host "[4/10] 删除 WSL 文件..." -ForegroundColor Yellow
+$wslPaths = @(
+    "$env:LOCALAPPDATA\Docker\wsl",
+    "$env:APPDATA\Docker Desktop\wsl",
+    "$env:USERPROFILE\AppData\Local\Docker\wsl",
+    "C:\Program Files\Docker",
+    "D:\Program Files\Docker",
+    "$env:LOCALAPPDATA\Packages\CanonicalGroupLimited*",
+    "$env:LOCALAPPDATA\Packages\Ubuntu*",
+    "$env:LOCALAPPDATA\Packages\docker*"
+)
+
+foreach ($path in $wslPaths) {
+    if (Test-Path $path) {
+        Write-Host "  删除: $path" -ForegroundColor Gray
+        Remove-Item -Path $path -Recurse -Force -ErrorAction SilentlyContinue
+    }
+}
+
+# 5. 清理 WSL 注册表
+Write-Host "[5/10] 清理注册表..." -ForegroundColor Yellow
+$registryPaths = @(
+    "HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\*",
+    "HKLM:\SOFTWARE\WOW6432Node\Microsoft\Windows\CurrentVersion\Uninstall\*"
+)
+foreach ($reg in $registryPaths) {
+    Get-ItemProperty $reg -ErrorAction SilentlyContinue |
+        Where-Object { $_.DisplayName -like "*Docker*" -or $_.DisplayName -like "*Ubuntu*" -or $_.DisplayName -like "*WSL*" } |
+        ForEach-Object {
+            Write-Host "  卸载注册表项: $($_.DisplayName)" -ForegroundColor Gray
+            RunDLL32.exe SysSetup.dll,SetupTextSystemShutdown 2>$null
+        }
+}
+
+# 6. 删除 WSL 配置文件
+Write-Host "[6/10] 删除 WSL 配置..." -ForegroundColor Yellow
+Remove-Item -Path "$env:USERPROFILE\.wslconfig" -Force -ErrorAction SilentlyContinue
+Remove-Item -Path "$env:USERPROFILE\.docker" -Recurse -Force -ErrorAction SilentlyContinue
+
+# 7. 清理服务
+Write-Host "[7/10] 清理服务..." -ForegroundColor Yellow
+sc.exe delete com.docker.service 2>$null
+
+# 8. 清理 AppData
+Write-Host "[8/10] 清理 AppData..." -ForegroundColor Yellow
+Remove-Item -Path "$env:APPDATA\Docker Desktop" -Recurse -Force -ErrorAction SilentlyContinue
+Remove-Item -Path "$env:LOCALAPPDATA\Docker" -Recurse -Force -ErrorAction SilentlyContinue
+
+# 9. 验证清理
+Write-Host "[9/10] 验证清理..." -ForegroundColor Yellow
+Write-Host "  检查 WSL:" -ForegroundColor Cyan
+wsl --list --verbose 2>&1 | Write-Host
+Write-Host "  检查 Docker 目录:" -ForegroundColor Cyan
+Get-ChildItem "C:\Program Files\Docker" -ErrorAction SilentlyContinue | Write-Host
+Get-ChildItem "D:\Program Files\Docker" -ErrorAction SilentlyContinue | Write-Host
+
+Write-Host ""
+Write-Host "[10/10] 完成！" -ForegroundColor Green
+Write-Host ""
+Write-Host "========================================" -ForegroundColor Green
+Write-Host "  请重启电脑，然后重新安装 Docker Desktop" -ForegroundColor Yellow
+Write-Host "========================================" -ForegroundColor Green

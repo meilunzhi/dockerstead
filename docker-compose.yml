@@ -18,6 +18,30 @@ services:
     networks:
       - default
 
+  php85:
+    build:
+      context: ./services/php85
+      args:
+        PHP_VERSION: php:8.5.4-fpm-alpine
+        CONTAINER_PACKAGE_URL: ${CONTAINER_PACKAGE_URL}
+        COMPOSER_URL: ${COMPOSER_URL}
+        PHP_EXTENSIONS: ${PHP85_EXTENSIONS}
+        TZ: "$TZ"
+    container_name: php84
+    expose:
+      - 9501
+    volumes:
+      - ${SOURCE_DIR}:/www/:rw
+      - ${PHP85_PHP_CONF_FILE}:/usr/local/etc/php/php.ini
+      - ${PHP85_FPM_CONF_FILE}:/usr/local/etc/php-fpm.d/www.conf
+      - ${PHP85_LOG_DIR}:/var/log/php
+      - ${PHP85_DATA_COMPOSER}:/tmp/composer
+    restart: always
+    cap_add:
+      - SYS_PTRACE
+    networks:
+      - default
+
   php84:
     build:
       context: ./services/php84
@@ -42,35 +66,35 @@ services:
     networks:
         - default
 
-#  php83:
-#    build:
-#      context: ./services/php83
-#      args:
-#        PHP_VERSION: php:${PHP83_VERSION}-fpm-alpine
-#        CONTAINER_PACKAGE_URL: ${CONTAINER_PACKAGE_URL}
-#        COMPOSER_URL: ${COMPOSER_URL}
-#        PHP_EXTENSIONS: ${PHP83_EXTENSIONS}
-#        TZ: "$TZ"
-#    container_name: php83
-#    expose:
-#      - 9501
-#    volumes:
-#      - ${SOURCE_DIR}:/www/:rw
-#      - ${PHP83_PHP_CONF_FILE}:/usr/local/etc/php/php.ini
-#      - ${PHP83_FPM_CONF_FILE}:/usr/local/etc/php-fpm.d/www.conf
-#      - ${PHP83_LOG_DIR}:/var/log/php
-#      - ${PHP83_DATA_COMPOSER}:/tmp/composer
-#    restart: always
-#    cap_add:
-#      - SYS_PTRACE
-#    networks:
-#      - default
+  php83:
+    build:
+      context: ./services/php83
+      args:
+        PHP_VERSION: php:8.3.30-fpm-alpine
+        CONTAINER_PACKAGE_URL: ${CONTAINER_PACKAGE_URL}
+        COMPOSER_URL: ${COMPOSER_URL}
+        PHP_EXTENSIONS: ${PHP83_EXTENSIONS}
+        TZ: "$TZ"
+    container_name: php83
+    expose:
+      - 9501
+    volumes:
+      - ${SOURCE_DIR}:/www/:rw
+      - ${PHP83_PHP_CONF_FILE}:/usr/local/etc/php/php.ini
+      - ${PHP83_FPM_CONF_FILE}:/usr/local/etc/php-fpm.d/www.conf
+      - ${PHP83_LOG_DIR}:/var/log/php
+      - ${PHP83_DATA_COMPOSER}:/tmp/composer
+    restart: always
+    cap_add:
+      - SYS_PTRACE
+    networks:
+      - default
 
   php82:
     build:
       context: ./services/php82
       args:
-        PHP_VERSION: php:${PHP82_VERSION}-fpm-alpine
+        PHP_VERSION: php:8.2.30-fpm-alpine
         CONTAINER_PACKAGE_URL: ${CONTAINER_PACKAGE_URL}
         COMPOSER_URL: ${COMPOSER_URL}
         PHP_EXTENSIONS: ${PHP82_EXTENSIONS}
@@ -84,6 +108,56 @@ services:
       - ${PHP83_FPM_CONF_FILE}:/usr/local/etc/php-fpm.d/www.conf
       - ${PHP83_LOG_DIR}:/var/log/php
       - ${PHP83_DATA_COMPOSER}:/tmp/composer
+    restart: always
+    cap_add:
+      - SYS_PTRACE
+    networks:
+      - default
+
+  php81:
+    build:
+      context: ./services/php81
+      args:
+        PHP_VERSION: php:8.1.34-fpm-alpine
+        CONTAINER_PACKAGE_URL: ${CONTAINER_PACKAGE_URL}
+        COMPOSER_URL: ${COMPOSER_URL}
+        PHP_EXTENSIONS: ${PHP81_EXTENSIONS}
+        TZ: "$TZ"
+    container_name: php81
+    expose:
+      - 9501
+    volumes:
+      - ${SOURCE_DIR}:/www/:rw
+      - ${PHP81_PHP_CONF_FILE}:/usr/local/etc/php/php.ini
+      - ${PHP81_FPM_CONF_FILE}:/usr/local/etc/php-fpm.d/www.conf
+      - ${PHP81_LOG_DIR}:/var/log/php
+      - ${PHP81_DATA_COMPOSER}:/tmp/composer
+    restart: always
+    cap_add:
+      - SYS_PTRACE
+    networks:
+      - default
+
+  php80:
+    build:
+      context: ./services/php80
+      args:
+        PHP_VERSION: php:8.0.30-fpm-alpine
+        CONTAINER_PACKAGE_URL: ${CONTAINER_PACKAGE_URL}
+        COMPOSER_URL: ${COMPOSER_URL}
+        PHP_EXTENSIONS: ${PHP80_EXTENSIONS}
+        TZ: "$TZ"
+    container_name: php80
+    expose:
+      - 9501
+    extra_hosts:
+      - "www.dockerstead.com:172.17.0.1"
+    volumes:
+      - ${SOURCE_DIR}:/www/:rw
+      - ${PHP80_PHP_CONF_FILE}:/usr/local/etc/php/php.ini
+      - ${PHP80_FPM_CONF_FILE}:/usr/local/etc/php-fpm.d/www.conf
+      - ${PHP80_LOG_DIR}:/var/log/php
+      - ${PHP80_DATA_COMPOSER}:/tmp/composer
     restart: always
     cap_add:
       - SYS_PTRACE
@@ -314,30 +388,30 @@ services:
 #    stdin_open: true
 #    tty: true
 
-  go:
-    build:
-      context: ./services/go
-      args:
-        GO_VERSION: ${GO_VERSION}
-        TZ: "$TZ"
-        GOPROXY: "${GO_PROXY}"
-    container_name: go
-    expose:
-      - "9100"
-    ports:
-      - "${GO_HOST_PORT}:9100"
-    volumes:
-      - ${SOURCE_DIR}:/www/:rw
-      - ${GO_APP_DIR}:/www/goapp/:rw
-      - ${GO_LOG_DIR}:/var/log/go/:rw
-    working_dir: /www
-    stdin_open: true
-    tty: true
-    restart: always
-    networks:
-      - default
-    depends_on:
-      - nginx
+#  go:
+#    build:
+#      context: ./services/go
+#      args:
+#        GO_VERSION: ${GO_VERSION}
+#        TZ: "$TZ"
+#        GOPROXY: "${GO_PROXY}"
+#    container_name: go
+#    expose:
+#      - "9100"
+#    ports:
+#      - "${GO_HOST_PORT}:9100"
+#    volumes:
+#      - ${SOURCE_DIR}:/www/:rw
+#      - ${GO_APP_DIR}:/www/goapp/:rw
+#      - ${GO_LOG_DIR}:/var/log/go/:rw
+#    working_dir: /www
+#    stdin_open: true
+#    tty: true
+#    restart: always
+#    networks:
+#      - default
+#    depends_on:
+#      - nginx
 
   # FrankenPHP - 现代 PHP 应用程序服务器 (多版本)
 #  frankenphp85:

@@ -1,0 +1,90 @@
+
+安装docker 到D盘
+start /w "" "Docker Desktop Installer.exe" install -accept-license --installation-dir="D:\Program Files\Docker" --wsl-default-data-root="D:\Program Files\Docker\data" --windows-containers-default-data-root="D:\Program Files\Docker"
+
+使用下面的参数
+# 使用 -ArgumentList 参数传递所有选项
+Start-Process -Wait -FilePath "Docker Desktop Installer.exe" -ArgumentList "install", "--quiet", "--accept-license", "--installation-dir=D:\Program Files\Docker", "--wsl-default-data-root=D:\Program Files\Docker\data", "--windows-containers-default-data-root=D:\Program Files\Docker"
+
+
+docker proxy
+
+{
+  "proxies": {
+    "default": {
+      "httpProxy": "http://127.0.0.1:7890",
+      "httpsProxy": "http://127.0.0.1:7890",
+      "noProxy": "localhost,127.0.0.1"
+    }
+  }
+}
+
+
+# 以管理员身份打开 PowerShell
+
+# 停止 Docker 服务
+Stop-Service -Name Docker* -Force -ErrorAction SilentlyContinue
+wsl --shutdown
+
+# 创建目录
+New-Item -Path "D:\Program Files\Docker" -ItemType Directory -Force
+New-Item -Path "D:\Program Files\Docker\data" -ItemType Directory -Force
+
+# 赋予完全权限
+$currentUser = [System.Security.Principal.WindowsIdentity]::GetCurrent().Name
+icacls "D:\Program Files\Docker" /grant:r "$currentUser:(OI)(CI)F" /T /Q
+icacls "D:\Program Files\Docker" /grant:r "SYSTEM:(OI)(CI)F" /T /Q
+icacls "D:\Program Files\Docker" /grant:r "Administrators:(OI)(CI)F" /T /Q
+
+# 验证
+icacls "D:\Program Files\Docker"
+
+# 重新启动 Docker Desktop
+Start-Process "D:\Program Files\Docker\Docker\Docker Desktop.exe"
+
+# Windows 11 全面清理脚本
+Write-Host "========================================" -ForegroundColor Cyan
+Write-Host "       Windows 11 缓存清理工具" -ForegroundColor Cyan
+Write-Host "========================================" -ForegroundColor Cyan
+Write-Host ""
+
+# 1. 停止服务
+Write-Host "[1/8] 停止相关服务..." -ForegroundColor Yellow
+Stop-Service -Name wuauserv -Force -ErrorAction SilentlyContinue
+Stop-Service -Name TrustedInstaller -Force -ErrorAction SilentlyContinue
+
+# 2. 清理临时文件
+Write-Host "[2/8] 清理临时文件..." -ForegroundColor Yellow
+Remove-Item -Path "$env:TEMP\*" -Recurse -Force -ErrorAction SilentlyContinue
+Remove-Item -Path "C:\Windows\Temp\*" -Recurse -Force -ErrorAction SilentlyContinue
+Remove-Item -Path "C:\Windows\Prefetch\*" -Recurse -Force -ErrorAction SilentlyContinue
+
+# 3. 清理更新缓存
+Write-Host "[3/8] 清理 Windows 更新缓存..." -ForegroundColor Yellow
+Remove-Item -Path "C:\Windows\SoftwareDistribution\Download\*" -Recurse -Force -ErrorAction SilentlyContinue
+
+# 4. 清理日志
+Write-Host "[4/8] 清理系统日志..." -ForegroundColor Yellow
+Remove-Item -Path "C:\Windows\Logs\*" -Recurse -Force -ErrorAction SilentlyContinue
+Remove-Item -Path "C:\Windows\Panther\*" -Recurse -Force -ErrorAction SilentlyContinue
+
+# 5. 清理缩略图
+Write-Host "[5/8] 清理缩略图缓存..." -ForegroundColor Yellow
+Remove-Item -Path "$env:LOCALAPPDATA\Microsoft\Windows\Explorer\thumbcache_*.db" -Force -ErrorAction SilentlyContinue
+
+# 6. 清理回收站
+Write-Host "[6/8] 清空回收站..." -ForegroundColor Yellow
+Clear-RecycleBin -Force -ErrorAction SilentlyContinue
+
+# 7. 清理组件存储
+Write-Host "[7/8] 清理组件存储..." -ForegroundColor Yellow
+Dism.exe /online /Cleanup-Image /StartComponentCleanup /Quiet /Norestart
+
+# 8. 重启服务
+Write-Host "[8/8] 重启服务..." -ForegroundColor Yellow
+Start-Service -Name wuauserv -ErrorAction SilentlyContinue
+
+Write-Host ""
+Write-Host "========================================" -ForegroundColor Green
+Write-Host "       清理完成！建议重启电脑" -ForegroundColor Green
+Write-Host "========================================" -ForegroundColor Green

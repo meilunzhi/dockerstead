@@ -1,5 +1,6 @@
 # syntax=docker/dockerfile:1
-FROM dunglas/frankenphp:latest
+#FROM dunglas/frankenphp:latest
+FROM dunglas/frankenphp:1.12.1-php8.5
 
 # 设置时区
 ENV TZ=Asia/Shanghai \
