@@ -27,7 +27,7 @@ services:
         COMPOSER_URL: ${COMPOSER_URL}
         PHP_EXTENSIONS: ${PHP85_EXTENSIONS}
         TZ: "$TZ"
-    container_name: php84
+    container_name: php85
     expose:
       - 9501
     volumes:
@@ -471,6 +471,7 @@ services:
     networks:
       - default
 
+  # FrankenPHP82
   frankenphp82:
     build:
       context: ./services/frankenphp/php82
@@ -489,6 +490,27 @@ services:
     restart: always
     networks:
       - default
+
+  # 1Panel v2
+  1panel-v2:
+    container_name: 1panel-v2
+    restart: always
+    network_mode: "host"
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - ${PANEL_SOURCE_DIR}:/www/:rw
+    environment:
+      - TZ=Asia/Shanghai
+      - PORT=${PANEL_HOST_PORT}
+      - USERNAME=${PANEL_USERNAME}
+      - PASSWORD=${PANEL_PASSWORD}
+      - ENTRANCE=${PANEL_ENTRANCE}
+      - BASE_DIR=${PANEL_BASE_DIR}
+    image: moelin/1panel:v2
+    labels:
+      createdBy: "Apps"
+
+
 
 
 #  supervisor:

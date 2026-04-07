@@ -5,7 +5,7 @@ ARG TZ
 ARG GOPROXY=https://goproxy.cn,direct
 
 # Install base tools
-RUN apk add --no-cache git make curl bash tzdata
+RUN apt-get update && apt-get install -y git make curl tzdata && rm -rf /var/lib/apt/lists/*
 
 # Set timezone
 RUN cp "/usr/share/zoneinfo/$TZ" /etc/localtime && echo "$TZ" > /etc/timezone
