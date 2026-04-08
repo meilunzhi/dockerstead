@@ -18,53 +18,53 @@ services:
     networks:
       - default
 
-  php85:
-    build:
-      context: ./services/php85
-      args:
-        PHP_VERSION: php:8.5.4-fpm-alpine
-        CONTAINER_PACKAGE_URL: ${CONTAINER_PACKAGE_URL}
-        COMPOSER_URL: ${COMPOSER_URL}
-        PHP_EXTENSIONS: ${PHP85_EXTENSIONS}
-        TZ: "$TZ"
-    container_name: php85
-    expose:
-      - 9501
-    volumes:
-      - ${SOURCE_DIR}:/www/:rw
-      - ${PHP85_PHP_CONF_FILE}:/usr/local/etc/php/php.ini
-      - ${PHP85_FPM_CONF_FILE}:/usr/local/etc/php-fpm.d/www.conf
-      - ${PHP85_LOG_DIR}:/var/log/php
-      - ${PHP85_DATA_COMPOSER}:/tmp/composer
-    restart: always
-    cap_add:
-      - SYS_PTRACE
-    networks:
-      - default
+#  php85:
+#    build:
+#      context: ./services/php85
+#      args:
+#        PHP_VERSION: php:8.5.4-fpm-alpine
+#        CONTAINER_PACKAGE_URL: ${CONTAINER_PACKAGE_URL}
+#        COMPOSER_URL: ${COMPOSER_URL}
+#        PHP_EXTENSIONS: ${PHP85_EXTENSIONS}
+#        TZ: "$TZ"
+#    container_name: php85
+#    expose:
+#      - 9501
+#    volumes:
+#      - ${SOURCE_DIR}:/www/:rw
+#      - ${PHP85_PHP_CONF_FILE}:/usr/local/etc/php/php.ini
+#      - ${PHP85_FPM_CONF_FILE}:/usr/local/etc/php-fpm.d/www.conf
+#      - ${PHP85_LOG_DIR}:/var/log/php
+#      - ${PHP85_DATA_COMPOSER}:/tmp/composer
+#    restart: always
+#    cap_add:
+#      - SYS_PTRACE
+#    networks:
+#      - default
 
-  php84:
-    build:
-      context: ./services/php84
-      args:
-        PHP_VERSION: php:8.4.19-fpm-alpine
-        CONTAINER_PACKAGE_URL: ${CONTAINER_PACKAGE_URL}
-        COMPOSER_URL: ${COMPOSER_URL}
-        PHP_EXTENSIONS: ${PHP84_EXTENSIONS}
-        TZ: "$TZ"
-    container_name: php84
-    expose:
-      - 9501
-    volumes:
-      - ${SOURCE_DIR}:/www/:rw
-      - ${PHP84_PHP_CONF_FILE}:/usr/local/etc/php/php.ini
-      - ${PHP84_FPM_CONF_FILE}:/usr/local/etc/php-fpm.d/www.conf
-      - ${PHP84_LOG_DIR}:/var/log/php
-      - ${PHP84_DATA_COMPOSER}:/tmp/composer
-    restart: always
-    cap_add:
-      - SYS_PTRACE
-    networks:
-        - default
+#  php84:
+#    build:
+#      context: ./services/php84
+#      args:
+#        PHP_VERSION: php:8.4.19-fpm-alpine
+#        CONTAINER_PACKAGE_URL: ${CONTAINER_PACKAGE_URL}
+#        COMPOSER_URL: ${COMPOSER_URL}
+#        PHP_EXTENSIONS: ${PHP84_EXTENSIONS}
+#        TZ: "$TZ"
+#    container_name: php84
+#    expose:
+#      - 9501
+#    volumes:
+#      - ${SOURCE_DIR}:/www/:rw
+#      - ${PHP84_PHP_CONF_FILE}:/usr/local/etc/php/php.ini
+#      - ${PHP84_FPM_CONF_FILE}:/usr/local/etc/php-fpm.d/www.conf
+#      - ${PHP84_LOG_DIR}:/var/log/php
+#      - ${PHP84_DATA_COMPOSER}:/tmp/composer
+#    restart: always
+#    cap_add:
+#      - SYS_PTRACE
+#    networks:
+#        - default
 
   php83:
     build:
@@ -88,81 +88,81 @@ services:
     cap_add:
       - SYS_PTRACE
     networks:
-      - default
+        - default
 
-  php82:
-    build:
-      context: ./services/php82
-      args:
-        PHP_VERSION: php:8.2.30-fpm-alpine
-        CONTAINER_PACKAGE_URL: ${CONTAINER_PACKAGE_URL}
-        COMPOSER_URL: ${COMPOSER_URL}
-        PHP_EXTENSIONS: ${PHP82_EXTENSIONS}
-        TZ: "$TZ"
-    container_name: php82
-    expose:
-      - 9501
-    volumes:
-      - ${SOURCE_DIR}:/www/:rw
-      - ${PHP82_PHP_CONF_FILE}:/usr/local/etc/php/php.ini
-      - ${PHP82_FPM_CONF_FILE}:/usr/local/etc/php-fpm.d/www.conf
-      - ${PHP82_LOG_DIR}:/var/log/php
-      - ${PHP82_DATA_COMPOSER}:/tmp/composer
-    restart: always
-    cap_add:
-      - SYS_PTRACE
-    networks:
-      - default
+#  php82:
+#    build:
+#      context: ./services/php82
+#      args:
+#        PHP_VERSION: php:8.2.30-fpm-alpine
+#        CONTAINER_PACKAGE_URL: ${CONTAINER_PACKAGE_URL}
+#        COMPOSER_URL: ${COMPOSER_URL}
+#        PHP_EXTENSIONS: ${PHP82_EXTENSIONS}
+#        TZ: "$TZ"
+#    container_name: php82
+#    expose:
+#      - 9501
+#    volumes:
+#      - ${SOURCE_DIR}:/www/:rw
+#      - ${PHP82_PHP_CONF_FILE}:/usr/local/etc/php/php.ini
+#      - ${PHP82_FPM_CONF_FILE}:/usr/local/etc/php-fpm.d/www.conf
+#      - ${PHP82_LOG_DIR}:/var/log/php
+#      - ${PHP82_DATA_COMPOSER}:/tmp/composer
+#    restart: always
+#    cap_add:
+#      - SYS_PTRACE
+#    networks:
+#      - default
 
-  php81:
-    build:
-      context: ./services/php81
-      args:
-        PHP_VERSION: php:8.1.34-fpm-alpine
-        CONTAINER_PACKAGE_URL: ${CONTAINER_PACKAGE_URL}
-        COMPOSER_URL: ${COMPOSER_URL}
-        PHP_EXTENSIONS: ${PHP81_EXTENSIONS}
-        TZ: "$TZ"
-    container_name: php81
-    expose:
-      - 9501
-    volumes:
-      - ${SOURCE_DIR}:/www/:rw
-      - ${PHP81_PHP_CONF_FILE}:/usr/local/etc/php/php.ini
-      - ${PHP81_FPM_CONF_FILE}:/usr/local/etc/php-fpm.d/www.conf
-      - ${PHP81_LOG_DIR}:/var/log/php
-      - ${PHP81_DATA_COMPOSER}:/tmp/composer
-    restart: always
-    cap_add:
-      - SYS_PTRACE
-    networks:
-      - default
+#  php81:
+#    build:
+#      context: ./services/php81
+#      args:
+#        PHP_VERSION: php:8.1.34-fpm-alpine
+#        CONTAINER_PACKAGE_URL: ${CONTAINER_PACKAGE_URL}
+#        COMPOSER_URL: ${COMPOSER_URL}
+#        PHP_EXTENSIONS: ${PHP81_EXTENSIONS}
+#        TZ: "$TZ"
+#    container_name: php81
+#    expose:
+#      - 9501
+#    volumes:
+#      - ${SOURCE_DIR}:/www/:rw
+#      - ${PHP81_PHP_CONF_FILE}:/usr/local/etc/php/php.ini
+#      - ${PHP81_FPM_CONF_FILE}:/usr/local/etc/php-fpm.d/www.conf
+#      - ${PHP81_LOG_DIR}:/var/log/php
+#      - ${PHP81_DATA_COMPOSER}:/tmp/composer
+#    restart: always
+#    cap_add:
+#      - SYS_PTRACE
+#    networks:
+#      - default
 
-  php80:
-    build:
-      context: ./services/php80
-      args:
-        PHP_VERSION: php:8.0.30-fpm-alpine
-        CONTAINER_PACKAGE_URL: ${CONTAINER_PACKAGE_URL}
-        COMPOSER_URL: ${COMPOSER_URL}
-        PHP_EXTENSIONS: ${PHP80_EXTENSIONS}
-        TZ: "$TZ"
-    container_name: php80
-    expose:
-      - 9501
-    extra_hosts:
-      - "www.dockerstead.com:172.17.0.1"
-    volumes:
-      - ${SOURCE_DIR}:/www/:rw
-      - ${PHP82_PHP_CONF_FILE}:/usr/local/etc/php/php.ini
-      - ${PHP82_FPM_CONF_FILE}:/usr/local/etc/php-fpm.d/www.conf
-      - ${PHP82_LOG_DIR}:/var/log/php
-      - ${PHP82_DATA_COMPOSER}:/tmp/composer
-    restart: always
-    cap_add:
-      - SYS_PTRACE
-    networks:
-      - default
+#  php80:
+#    build:
+#      context: ./services/php80
+#      args:
+#        PHP_VERSION: php:8.0.30-fpm-alpine
+#        CONTAINER_PACKAGE_URL: ${CONTAINER_PACKAGE_URL}
+#        COMPOSER_URL: ${COMPOSER_URL}
+#        PHP_EXTENSIONS: ${PHP80_EXTENSIONS}
+#        TZ: "$TZ"
+#    container_name: php80
+#    expose:
+#      - 9501
+#    extra_hosts:
+#      - "www.dockerstead.com:172.17.0.1"
+#    volumes:
+#      - ${SOURCE_DIR}:/www/:rw
+#      - ${PHP82_PHP_CONF_FILE}:/usr/local/etc/php/php.ini
+#      - ${PHP82_FPM_CONF_FILE}:/usr/local/etc/php-fpm.d/www.conf
+#      - ${PHP82_LOG_DIR}:/var/log/php
+#      - ${PHP82_DATA_COMPOSER}:/tmp/composer
+#    restart: always
+#    cap_add:
+#      - SYS_PTRACE
+#    networks:
+#      - default
 
   php74:
     build:
@@ -297,22 +297,22 @@ services:
 #      - REDIS_1_PORT=6379
 #      - TZ=$TZ
 
-  mongodb:
-    image: mongo:${MONGODB_VERSION}
-    container_name: mongodb
-    environment:
-        MONGO_INITDB_ROOT_USERNAME: "${MONGODB_INITDB_ROOT_USERNAME}"
-        MONGO_INITDB_ROOT_PASSWORD: "${MONGODB_INITDB_ROOT_PASSWORD}"
-        TZ: "$TZ"
-    volumes:
-      - ${DATA_DIR}/mongo:/data/db:rw
-      - ${DATA_DIR}/mongo_key:/mongo:rw
-    ports:
-       - "${MONGODB_HOST_PORT}:27017"
-    networks:
-       - default
-    command:
-       --auth
+#  mongodb:
+#    image: mongo:${MONGODB_VERSION}
+#    container_name: mongodb
+#    environment:
+#        MONGO_INITDB_ROOT_USERNAME: "${MONGODB_INITDB_ROOT_USERNAME}"
+#        MONGO_INITDB_ROOT_PASSWORD: "${MONGODB_INITDB_ROOT_PASSWORD}"
+#        TZ: "$TZ"
+#    volumes:
+#      - ${DATA_DIR}/mongo:/data/db:rw
+#      - ${DATA_DIR}/mongo_key:/mongo:rw
+#    ports:
+#       - "${MONGODB_HOST_PORT}:27017"
+#    networks:
+#       - default
+#    command:
+#       --auth
 
 #  adminmongo:
 #    image: mrvautin/adminmongo
@@ -414,103 +414,103 @@ services:
       - nginx
 
   # FrankenPHP - 现代 PHP 应用程序服务器 (多版本)
-  frankenphp85:
-    build:
-      context: ./services/frankenphp/php85
-    container_name: frankenphp85
-    ports:
-      - "${FRANKENPHP85_HTTP_PORT}:80"
-      - "${FRANKENPHP85_HTTPS_PORT}:443"
-      - "${FRANKENPHP85_ADMIN_PORT}:8025"
-    volumes:
-      - ${SOURCE_DIR}:/www/:rw
-      - ${FRANKENPHP85_CADDYFILE}:/etc/caddy/Caddyfile:ro
-      - ${FRANKENPHP85_DATA_DIR}:/data/caddy:rw
-      - ${FRANKENPHP85_LOG_DIR}:/var/log/caddy:rw
-    environment:
-      TZ: "$TZ"
-    restart: always
-    networks:
-      - default
+#  frankenphp85:
+#    build:
+#      context: ./services/frankenphp/php85
+#    container_name: frankenphp85
+#    ports:
+#      - "${FRANKENPHP85_HTTP_PORT}:80"
+#      - "${FRANKENPHP85_HTTPS_PORT}:443"
+#      - "${FRANKENPHP85_ADMIN_PORT}:8025"
+#    volumes:
+#      - ${SOURCE_DIR}:/www/:rw
+#      - ${FRANKENPHP85_CADDYFILE}:/etc/caddy/Caddyfile:ro
+#      - ${FRANKENPHP85_DATA_DIR}:/data/caddy:rw
+#      - ${FRANKENPHP85_LOG_DIR}:/var/log/caddy:rw
+#    environment:
+#      TZ: "$TZ"
+#    restart: always
+#    networks:
+#      - default
 
-  frankenphp84:
-    build:
-      context: ./services/frankenphp/php84
-    container_name: frankenphp84
-    ports:
-      - "${FRANKENPHP84_HTTP_PORT}:80"
-      - "${FRANKENPHP84_HTTPS_PORT}:443"
-      - "${FRANKENPHP84_ADMIN_PORT}:8024"
-    volumes:
-      - ${SOURCE_DIR}:/www/:rw
-      - ${FRANKENPHP84_CADDYFILE}:/etc/caddy/Caddyfile:ro
-      - ${FRANKENPHP84_DATA_DIR}:/data/caddy:rw
-      - ${FRANKENPHP84_LOG_DIR}:/var/log/caddy:rw
-    environment:
-      TZ: "$TZ"
-    restart: always
-    networks:
-      - default
+#  frankenphp84:
+#    build:
+#      context: ./services/frankenphp/php84
+#    container_name: frankenphp84
+#    ports:
+#      - "${FRANKENPHP84_HTTP_PORT}:80"
+#      - "${FRANKENPHP84_HTTPS_PORT}:443"
+#      - "${FRANKENPHP84_ADMIN_PORT}:8024"
+#    volumes:
+#      - ${SOURCE_DIR}:/www/:rw
+#      - ${FRANKENPHP84_CADDYFILE}:/etc/caddy/Caddyfile:ro
+#      - ${FRANKENPHP84_DATA_DIR}:/data/caddy:rw
+#      - ${FRANKENPHP84_LOG_DIR}:/var/log/caddy:rw
+#    environment:
+#      TZ: "$TZ"
+#    restart: always
+#    networks:
+#      - default
 
-  frankenphp83:
-    build:
-      context: ./services/frankenphp/php83
-    container_name: frankenphp83
-    ports:
-      - "${FRANKENPHP83_HTTP_PORT}:80"
-      - "${FRANKENPHP83_HTTPS_PORT}:443"
-      - "${FRANKENPHP83_ADMIN_PORT}:8023"
-    volumes:
-      - ${SOURCE_DIR}:/www/:rw
-      - ${FRANKENPHP83_CADDYFILE}:/etc/caddy/Caddyfile:ro
-      - ${FRANKENPHP83_DATA_DIR}:/data/caddy:rw
-      - ${FRANKENPHP83_LOG_DIR}:/var/log/caddy:rw
-    environment:
-      TZ: "$TZ"
-    restart: always
-    networks:
-      - default
+#  frankenphp83:
+#    build:
+#      context: ./services/frankenphp/php83
+#    container_name: frankenphp83
+#    ports:
+#      - "${FRANKENPHP83_HTTP_PORT}:80"
+#      - "${FRANKENPHP83_HTTPS_PORT}:443"
+#      - "${FRANKENPHP83_ADMIN_PORT}:8023"
+#    volumes:
+#      - ${SOURCE_DIR}:/www/:rw
+#      - ${FRANKENPHP83_CADDYFILE}:/etc/caddy/Caddyfile:ro
+#      - ${FRANKENPHP83_DATA_DIR}:/data/caddy:rw
+#      - ${FRANKENPHP83_LOG_DIR}:/var/log/caddy:rw
+#    environment:
+#      TZ: "$TZ"
+#    restart: always
+#    networks:
+#      - default
 
   # FrankenPHP82
-  frankenphp82:
-    build:
-      context: ./services/frankenphp/php82
-    container_name: frankenphp82
-    ports:
-      - "${FRANKENPHP82_HTTP_PORT}:80"
-      - "${FRANKENPHP82_HTTPS_PORT}:443"
-      - "${FRANKENPHP82_ADMIN_PORT}:8022"
-    volumes:
-      - ${SOURCE_DIR}:/www/:rw
-      - ${FRANKENPHP82_CADDYFILE}:/etc/caddy/Caddyfile:ro
-      - ${FRANKENPHP82_DATA_DIR}:/data/caddy:rw
-      - ${FRANKENPHP82_LOG_DIR}:/var/log/caddy:rw
-    environment:
-      TZ: "$TZ"
-    restart: always
-    networks:
-      - default
+#  frankenphp82:
+#    build:
+#      context: ./services/frankenphp/php82
+#    container_name: frankenphp82
+#    ports:
+#      - "${FRANKENPHP82_HTTP_PORT}:80"
+#      - "${FRANKENPHP82_HTTPS_PORT}:443"
+#      - "${FRANKENPHP82_ADMIN_PORT}:8022"
+#    volumes:
+#      - ${SOURCE_DIR}:/www/:rw
+#      - ${FRANKENPHP82_CADDYFILE}:/etc/caddy/Caddyfile:ro
+#      - ${FRANKENPHP82_DATA_DIR}:/data/caddy:rw
+#      - ${FRANKENPHP82_LOG_DIR}:/var/log/caddy:rw
+#    environment:
+#      TZ: "$TZ"
+#    restart: always
+#    networks:
+#      - default
 
   # 1Panel v2
-  1panel-v2:
-    container_name: 1panel-v2
-    restart: always
-    network_mode: "host"
-    volumes:
-      - /var/run/docker.sock:/var/run/docker.sock
-      - ${PANEL_SOURCE_DIR}:/www/:rw
-    environment:
-      - TZ=Asia/Shanghai
-      - PORT=${PANEL_HOST_PORT}
-      - USERNAME=${PANEL_USERNAME}
-      - PASSWORD=${PANEL_PASSWORD}
-      - ENTRANCE=${PANEL_ENTRANCE}
-      - BASE_DIR=${PANEL_BASE_DIR}
-    image: moelin/1panel:v2
-    labels:
-      createdBy: "Apps"
-
-
+#  1panel-v2:
+#    container_name: 1panel-v2
+#    restart: always
+#    # network_mode: "host"  # 删除这行
+#    ports:
+#      - "${PANEL_HOST_PORT}:${PANEL_HOST_PORT}"  # 添加端口映射
+#    volumes:
+#      - /var/run/docker.sock:/var/run/docker.sock
+#      - ${PANEL_SOURCE_DIR}:/www/:rw
+#    environment:
+#      - TZ=Asia/Shanghai
+#      - PORT=${PANEL_HOST_PORT}
+#      - USERNAME=${PANEL_USERNAME}
+#      - PASSWORD=${PANEL_PASSWORD}
+#      - ENTRANCE=${PANEL_ENTRANCE}
+#      - BASE_DIR=${PANEL_BASE_DIR}
+#    image: moelin/1panel:v2
+#    labels:
+#      createdBy: "Apps"
 
 
 #  supervisor:
