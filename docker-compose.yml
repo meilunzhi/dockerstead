@@ -539,6 +539,99 @@ services:
 #    networks:
 #      - default
 
+  # Qwen 大语言模型服务
+  qwen:
+    image: ai/qwen3:14B-Q6_K
+    container_name: qwen3-prod
+    restart: unless-stopped
+    runtime: nvidia
+    deploy:
+      resources:
+        limits:
+          cpus: '4'
+          memory: 16G
+        reservations:
+          devices:
+            - driver: nvidia
+              count: all
+              capabilities: [gpu]
+    ports:
+      - "127.0.0.1:8088:8080"
+    environment:
+      - ENABLE_THINKING=true
+      - MAX_CONCURRENT_REQUESTS=10
+      - CONTEXT_WINDOW_SIZE=41000
+      - NVIDIA_VISIBLE_DEVICES=all
+      - NVIDIA_DRIVER_CAPABILITIES=compute,utility
+    volumes:
+      - /path/to/local/config:/app/config
+      - qwen3-data:/app/data
+    tmpfs:
+      - /tmp:rw,size=1g
+    user: "1000:1000"
+    read_only: true
+    cap_drop:
+      - ALL
+    security_opt:
+      - no-new-privileges:true
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "100m"
+        max-file: "7"
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8080/v1/models"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 60s
+
+  qwen3:
+    image: ai/qwen3:14B-Q6_K
+    container_name: qwen3-prod
+    restart: unless-stopped
+    runtime: nvidia
+    deploy:
+      resources:
+        limits:
+          cpus: '4'
+          memory: 16G
+        reservations:
+          devices:
+            - driver: nvidia
+              count: all
+              capabilities: [gpu]
+    ports:
+      - "127.0.0.1:8089:8080"
+    environment:
+      - ENABLE_THINKING=true
+      - MAX_CONCURRENT_REQUESTS=10
+      - CONTEXT_WINDOW_SIZE=41000
+      - NVIDIA_VISIBLE_DEVICES=all
+      - NVIDIA_DRIVER_CAPABILITIES=compute,utility
+    volumes:
+      - /path/to/local/config:/app/config
+      - qwen3-data:/app/data
+    tmpfs:
+      - /tmp:rw,size=1g
+    user: "1000:1000"
+    read_only: true
+    cap_drop:
+      - ALL
+    security_opt:
+      - no-new-privileges:true
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "100m"
+        max-file: "7"
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8080/v1/models"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 60s
+
 networks:
   default:
     driver: bridge
@@ -547,3 +640,7 @@ networks:
       # 解除下面的注释可以设置网段，用于nginx等容器固定容器IP
       #config:
       #  - subnet: 10.0.0.0/24
+
+volumes:
+  qwen3-data:
+    driver: local
