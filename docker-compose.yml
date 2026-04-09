@@ -307,9 +307,28 @@ services:
 #      - REDIS_1_PORT=6379
 #      - TZ=$TZ
 
-  # Cockpit - Linux 服务器 Web 管理界面
+    # DPanel - Docker 管理面板
+  dpanel:
+    image: dpanel/dpanel:latest
+    container_name: dpanel
+    restart: always
+    ports:
+      - "${DPANEL_HTTP_PORT}:80"
+      - "${DPANEL_HTTPS_PORT}:443"
+      - "${DPANEL_ADMIN_PORT}:8080"
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - ${DPANEL_DATA_DIR}:/dpanel
+    environment:
+      APP_NAME: dpanel
+      TZ: "$TZ"
+    networks:
+      - default
+
+# Cockpit - Linux 服务器 Web 管理界面
 #  cockpit:
-#    image: cockpitproject/sockpit:latest
+##    image: cockpitproject/sockpit:latest
+#    image: cockpithq/cockpit:pro-2.14.0
 #    container_name: cockpit
 #    ports:
 #      - "${COCKPIT_HOST_PORT}:9090"

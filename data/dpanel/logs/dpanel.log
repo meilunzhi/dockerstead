@@ -1,0 +1,9 @@
+[2026-04-09 16:23:28.588]	[WARN]	default	DPanel is a lightweight container management panel; visit https://deepanel.com for more information.
+[2026-04-09 16:23:28.592]	[INFO]	default	config	{"env": "production", "version": "1.10.2", "date": "[2026-04-09 16:23:28.592]"}
+[2026-04-09 16:23:28.592]	[INFO]	default	config	{"storage": "/dpanel"}
+[2026-04-09 16:23:28.833]	[INFO]	default	main	{"migrate": "1.1.1"}
+[2026-04-09 16:23:28.839]	[INFO]	default	main	{"migrate": "1.5.2"}
+[2026-04-09 16:23:28.851]	[INFO]	default	main	{"migrate": "1.5.3"}
+[2026-04-09 16:23:28.857]	[INFO]	default	main	{"migrate": "1.6.3"}
+[2026-04-09 16:23:28.868]	[INFO]	default	main	{"migrate": "1.7.0"}
+[2026-04-09 16:23:29.200]	[INFO]	default	provider load community edition
