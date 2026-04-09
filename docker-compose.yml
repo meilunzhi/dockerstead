@@ -18,6 +18,16 @@ services:
     networks:
       - default
 
+#  gm-service:
+#    image: docker-rep.gmssh.com/gmssh/gs-main-x86:latest
+#    container_name: gm-service-latest
+#    ports:
+#      - "8090:80"
+#    restart: always
+#    pull_policy: always  # 始终拉取最新镜像
+#    networks:
+#        - default
+
 #  php85:
 #    build:
 #      context: ./services/php85
@@ -297,6 +307,21 @@ services:
 #      - REDIS_1_PORT=6379
 #      - TZ=$TZ
 
+  # Cockpit - Linux 服务器 Web 管理界面
+#  cockpit:
+#    image: cockpitproject/sockpit:latest
+#    container_name: cockpit
+#    ports:
+#      - "${COCKPIT_HOST_PORT}:9090"
+#    volumes:
+#      - ${COCKPIT_CONFIG_DIR}:/etc/cockpit:ro
+#      - ${DATA_DIR}/cockpit:/var/lib/cockpit:rw
+#    restart: always
+#    networks:
+#      - default
+#    environment:
+#      TZ: "$TZ"
+
 #  mongodb:
 #    image: mongo:${MONGODB_VERSION}
 #    container_name: mongodb
@@ -539,98 +564,56 @@ services:
 #    networks:
 #      - default
 
-  # Qwen 大语言模型服务
-  qwen:
-    image: ai/qwen3:14B-Q6_K
-    container_name: qwen3-prod
-    restart: unless-stopped
-    runtime: nvidia
-    deploy:
-      resources:
-        limits:
-          cpus: '4'
-          memory: 16G
-        reservations:
-          devices:
-            - driver: nvidia
-              count: all
-              capabilities: [gpu]
-    ports:
-      - "127.0.0.1:8088:8080"
-    environment:
-      - ENABLE_THINKING=true
-      - MAX_CONCURRENT_REQUESTS=10
-      - CONTEXT_WINDOW_SIZE=41000
-      - NVIDIA_VISIBLE_DEVICES=all
-      - NVIDIA_DRIVER_CAPABILITIES=compute,utility
-    volumes:
-      - /path/to/local/config:/app/config
-      - qwen3-data:/app/data
-    tmpfs:
-      - /tmp:rw,size=1g
-    user: "1000:1000"
-    read_only: true
-    cap_drop:
-      - ALL
-    security_opt:
-      - no-new-privileges:true
-    logging:
-      driver: "json-file"
-      options:
-        max-size: "100m"
-        max-file: "7"
-    healthcheck:
-      test: ["CMD", "curl", "-f", "http://localhost:8080/v1/models"]
-      interval: 30s
-      timeout: 10s
-      retries: 3
-      start_period: 60s
+# Qwen 大语言模型服务
+#  qwen:
+#    image: ai/qwen3:14B-Q6_K
+##    image: ai/qwen3.5:9B-UD-Q4_K_XL
+##    image: ai/qwen3:3.5-9B
+#    container_name: qwen3-prod
+#    restart: unless-stopped
+#    runtime: nvidia
+#    deploy:
+#      resources:
+#        limits:
+#          cpus: '4'
+#          memory: 16G
+#        reservations:
+#          devices:
+#            - driver: nvidia
+#              count: all
+#              capabilities: [gpu]
+#    ports:
+#      - "127.0.0.1:8088:8080"
+#    environment:
+#      - ENABLE_THINKING=true
+#      - MAX_CONCURRENT_REQUESTS=10
+#      - CONTEXT_WINDOW_SIZE=41000
+#      - NVIDIA_VISIBLE_DEVICES=all
+#      - NVIDIA_DRIVER_CAPABILITIES=compute,utility
+#    volumes:
+#      - /path/to/local/config:/app/config
+#      - qwen3-data:/app/data
+#    tmpfs:
+#      - /tmp:rw,size=1g
+#    user: "1000:1000"
+#    read_only: true
+#    cap_drop:
+#      - ALL
+#    security_opt:
+#      - no-new-privileges:true
+#    logging:
+#      driver: "json-file"
+#      options:
+#        max-size: "100m"
+#        max-file: "7"
+#    healthcheck:
+#      test: ["CMD", "curl", "-f", "http://localhost:8080/v1/models"]
+#      interval: 30s
+#      timeout: 10s
+#      retries: 3
+#      start_period: 60s
+#    command: ["python", "-m", "uvicorn", "app:app", "--host", "0.0.0.0", "--port", "8080"]
 
-  qwen3:
-    image: ai/qwen3:14B-Q6_K
-    container_name: qwen3-prod
-    restart: unless-stopped
-    runtime: nvidia
-    deploy:
-      resources:
-        limits:
-          cpus: '4'
-          memory: 16G
-        reservations:
-          devices:
-            - driver: nvidia
-              count: all
-              capabilities: [gpu]
-    ports:
-      - "127.0.0.1:8089:8080"
-    environment:
-      - ENABLE_THINKING=true
-      - MAX_CONCURRENT_REQUESTS=10
-      - CONTEXT_WINDOW_SIZE=41000
-      - NVIDIA_VISIBLE_DEVICES=all
-      - NVIDIA_DRIVER_CAPABILITIES=compute,utility
-    volumes:
-      - /path/to/local/config:/app/config
-      - qwen3-data:/app/data
-    tmpfs:
-      - /tmp:rw,size=1g
-    user: "1000:1000"
-    read_only: true
-    cap_drop:
-      - ALL
-    security_opt:
-      - no-new-privileges:true
-    logging:
-      driver: "json-file"
-      options:
-        max-size: "100m"
-        max-file: "7"
-    healthcheck:
-      test: ["CMD", "curl", "-f", "http://localhost:8080/v1/models"]
-      interval: 30s
-      timeout: 10s
-      retries: 3
-      start_period: 60s
 
 networks:
   default:
