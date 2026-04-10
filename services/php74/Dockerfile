@@ -31,9 +31,12 @@ ENV LD_PRELOAD /usr/lib/preloadable_libiconv.so php
 
 
 # Install composer and change it's cache home
-RUN curl -o /usr/bin/composer https://getcomposer.org/download/2.9.5/composer.phar \
-    && chmod +x /usr/bin/composer
-ENV COMPOSER_HOME=/tmp/composer
+#RUN curl -o /usr/bin/composer https://getcomposer.org/download/2.9.5/composer.phar \
+#    && chmod +x /usr/bin/composer
+#ENV COMPOSER_HOME=/tmp/composer
+
+COPY composer.phar /usr/bin/composer
+RUN chmod +x /usr/bin/composer
 
 # php image's www-data user uid & gid are 82, change them to 1000 (primary user)
 RUN apk --no-cache add shadow && usermod -u 1000 www-data && groupmod -g 1000 www-data
