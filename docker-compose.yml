@@ -325,6 +325,22 @@ services:
     networks:
       - default
 
+  # Portainer - Docker 容器管理界面
+  portainer:
+    image: portainer/portainer:latest
+    container_name: portainer
+    ports:
+      - "${PORTAINTER_HOST_PORT}:9000"
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - ${PORTAINTER_DATA_DIR}:/data
+      - ${PORTAINTER_PUBLIC_DIR}:/data
+    restart: always
+    networks:
+      - default
+
+
+
 # Cockpit - Linux 服务器 Web 管理界面
 #  cockpit:
 ##    image: cockpitproject/sockpit:latest
@@ -537,6 +553,8 @@ services:
 
   # 1Panel v2
 #  1panel-v2:
+
+
 #    container_name: 1panel-v2
 #    restart: always
 #    # network_mode: "host"  # 删除这行
