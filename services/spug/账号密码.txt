@@ -1,0 +1,4 @@
+以下操作会创建一个用户名为 admin 密码为 spug.cc 的管理员账户，可自行替换管理员账户/密码。
+
+
+docker exec spug init_spug admin spug.cc

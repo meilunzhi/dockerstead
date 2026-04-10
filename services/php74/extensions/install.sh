@@ -560,12 +560,12 @@ if [[ -z "${EXTENSIONS##*,xdebug,*}" ]]; then
     if [[ "$?" = "1" ]]; then
         isPhpVersionGreaterOrEqual 7 4
         if [[ "$?" = "1" ]]; then
-            installExtensionFromTgz xdebug-2.9.2
+            installExtensionFromTgz xdebug-3.1.6
         else
-            installExtensionFromTgz xdebug-2.6.1
+            installExtensionFromTgz xdebug-3.1.6
         fi
     else
-        installExtensionFromTgz xdebug-2.5.5
+        installExtensionFromTgz xdebug-2.9.2
     fi
 fi
 
