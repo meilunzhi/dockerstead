@@ -339,7 +339,48 @@ services:
     networks:
       - default
 
+  # Spug - 运维平台
+  spug-db:
+    image: mysql:${SPUG_MYSQL_VERSION}
+    container_name: spug-db
+    restart: always
+    command: --port 3306 --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci
+    volumes:
+      - ${SPUG_MYSQL_DATA_DIR}:/var/lib/mysql
+    environment:
+      - MYSQL_DATABASE=${SPUG_MYSQL_DATABASE}
+      - MYSQL_USER=${SPUG_MYSQL_USER}
+      - MYSQL_PASSWORD=${SPUG_MYSQL_PASSWORD}
+      - MYSQL_ROOT_PASSWORD=${SPUG_MYSQL_ROOT_PASSWORD}
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+      interval: 5s
+      timeout: 3s
+      retries: 10
+    networks:
+      - spug-network
 
+  spug:
+    image: openspug/spug-service
+    container_name: spug
+    privileged: true
+    restart: always
+    volumes:
+      - ${SPUG_SERVICE_DATA_DIR}:/data/spug
+      - ${SPUG_REPOS_DIR}:/data/repos
+    ports:
+      - "${SPUG_HOST_PORT}:80"
+    environment:
+      - MYSQL_DATABASE=${SPUG_MYSQL_DATABASE}
+      - MYSQL_USER=${SPUG_MYSQL_USER}
+      - MYSQL_PASSWORD=${SPUG_MYSQL_PASSWORD}
+      - MYSQL_HOST=spug-db
+      - MYSQL_PORT=3306
+    depends_on:
+      spug-db:
+        condition: service_healthy
+    networks:
+      - spug-network
 
 # Cockpit - Linux 服务器 Web 管理界面
 #  cockpit:
@@ -660,6 +701,8 @@ networks:
       # 解除下面的注释可以设置网段，用于nginx等容器固定容器IP
       #config:
       #  - subnet: 10.0.0.0/24
+  spug-network:
+    driver: bridge
 
 volumes:
   qwen3-data:
