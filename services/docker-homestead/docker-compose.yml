@@ -1,0 +1,345 @@
+# ============================================
+# Docker Laravel Homestead
+# 一站式 PHP 开发环境
+# ============================================
+
+services:
+  # ==========================================
+  # PHP-FPM 服务 (8.4)
+  # ==========================================
+  php:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      target: final
+    container_name: homestead
+    hostname: homestead
+    restart: unless-stopped
+    volumes:
+      # 代码目录映射
+      - ./projects:/var/www/html:rw
+      # SSH 密钥
+      - ~/.ssh:/home/homestead/.ssh:ro
+      # Composer 缓存
+      - composer_cache:/root/.composer
+      # PHP 配置
+      - ./php/php.ini:/etc/php/8.4/fpm/conf.d/99-custom.ini:ro
+      - ./php/php.ini:/etc/php/8.4/cli/conf.d/99-custom.ini:ro
+      - ./php/xdebug.ini:/etc/php/8.4/mods-available/xdebug.ini:ro
+      # Nginx 配置
+      - ./nginx/default.conf:/etc/nginx/sites-available/default:ro
+    environment:
+      TZ: Asia/Shanghai
+      PHP_VERSION: 8.4
+    working_dir: /var/www/html
+    depends_on:
+      mysql:
+        condition: service_healthy
+      redis:
+        condition: service_started
+      postgres:
+        condition: service_started
+    networks:
+      - homestead
+
+  # ==========================================
+  # Nginx Web 服务器
+  # ==========================================
+  nginx:
+    image: nginx:1.27-alpine
+    container_name: homestead_nginx
+    restart: unless-stopped
+    ports:
+      - "${WEB_PORT:-80}:80"
+      - "${SSL_PORT:-443}:443"
+    volumes:
+      # 代码目录
+      - ./projects:/var/www/html:ro
+      # Nginx 配置
+      - ./nginx/default.conf:/etc/nginx/conf.d/default.conf:ro
+      - ./nginx/ssl:/etc/nginx/ssl:ro
+      # 日志
+      - ./logs/nginx:/var/log/nginx
+    depends_on:
+      - php
+    healthcheck:
+      test: ["CMD", "nginx", "-t"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+    networks:
+      - homestead
+
+  # ==========================================
+  # MySQL 8.0
+  # ==========================================
+  mysql:
+    image: mysql:8.0.45
+    container_name: homestead_mysql
+    restart: unless-stopped
+    ports:
+      - "${MYSQL_PORT:-3306}:3306"
+    environment:
+      MYSQL_ROOT_PASSWORD: secret
+      MYSQL_DATABASE: homestead
+      MYSQL_USER: homestead
+      MYSQL_PASSWORD: secret
+      TZ: Asia/Shanghai
+    volumes:
+      # 数据持久化
+      - mysql_data:/var/lib/mysql
+      # 初始化脚本
+      - ./mysql/init.sql:/docker-entrypoint-initdb.d/init.sql:ro
+      # 配置文件
+      - ./mysql/my.cnf:/etc/mysql/conf.d/my.cnf:ro
+      # 日志
+      - ./logs/mysql:/var/log/mysql
+    command:
+      - --character-set-server=utf8mb4
+      - --collation-server=utf8mb4_unicode_ci
+      - --default-authentication-plugin=mysql_native_password
+      - --skip-log-bin
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-uroot", "-psecret"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    networks:
+      - homestead
+
+  # ==========================================
+  # PostgreSQL 16
+  # ==========================================
+  postgres:
+    image: postgres:16-alpine
+    container_name: homestead_postgres
+    restart: unless-stopped
+    ports:
+      - "${POSTGRES_PORT:-5432}:5432"
+    environment:
+      POSTGRES_DB: homestead
+      POSTGRES_USER: homestead
+      POSTGRES_PASSWORD: secret
+      TZ: Asia/Shanghai
+    volumes:
+      # 数据持久化
+      - postgres_data:/var/lib/postgresql/data
+      # 初始化脚本
+      - ./postgres/init.sql:/docker-entrypoint-initdb.d/init.sql:ro
+      # 配置文件
+      - ./postgres/postgresql.conf:/etc/postgresql/postgresql.conf:ro
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U homestead"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    networks:
+      - homestead
+
+  # ==========================================
+  # Redis 7
+  # ==========================================
+  redis:
+    image: redis:7-alpine
+    container_name: homestead_redis
+    restart: unless-stopped
+    ports:
+      - "${REDIS_PORT:-6379}:6379"
+    command: redis-server --requirepass secret --appendonly yes
+    volumes:
+      - redis_data:/data
+      - ./redis/redis.conf:/usr/local/etc/redis/redis.conf:ro
+    healthcheck:
+      test: ["CMD", "redis-cli", "-a", "secret", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    networks:
+      - homestead
+
+  # ==========================================
+  # Memcached
+  # ==========================================
+  memcached:
+    image: memcached:alpine
+    container_name: homestead_memcached
+    restart: unless-stopped
+    ports:
+      - "${MEMCACHED_PORT:-11211}:11211"
+    command: memcached -m 128
+    networks:
+      - homestead
+
+  # ==========================================
+  # Mailpit (邮件调试)
+  # ==========================================
+  mailpit:
+    image: axllent/mailpit:latest
+    container_name: homestead_mailpit
+    restart: unless-stopped
+    ports:
+      - "${MAILPIT_SMTP_PORT:-1025}:1025"
+      - "${MAILPIT_UI_PORT:-8025}:8025"
+    environment:
+      TZ: Asia/Shanghai
+    networks:
+      - homestead
+
+  # ==========================================
+  # Mailhog (邮件调试 - 备选)
+  # ==========================================
+  # mailhog:
+  #   image: mailhog/mailhog:latest
+  #   container_name: homestead_mailhog
+  #   restart: unless-stopped
+  #   ports:
+  #     - "${MAILHOG_SMTP_PORT:-1025}:1025"
+  #     - "${MAILHOG_UI_PORT:-8025}:8025"
+  #   networks:
+  #     - homestead
+
+  # ==========================================
+  # Beanstalkd
+  # ==========================================
+  beanstalkd:
+    image: schickling/beanstalkd:latest
+    container_name: homestead_beanstalkd
+    restart: unless-stopped
+    ports:
+      - "${BEANSTALKD_PORT:-11300}:11300"
+    command: beanstalkd -p 11300
+    networks:
+      - homestead
+
+  # ==========================================
+  # MinIO (S3 兼容存储)
+  # ==========================================
+  minio:
+    image: minio/minio:latest
+    container_name: homestead_minio
+    restart: unless-stopped
+    ports:
+      - "${MINIO_API_PORT:-9000}:9000"
+      - "${MINIO_CONSOLE_PORT:-9001}:9001"
+    environment:
+      MINIO_ROOT_USER: homestead
+      MINIO_ROOT_PASSWORD: homesteadsecret
+      TZ: Asia/Shanghai
+    volumes:
+      - minio_data:/data
+    command: server /data --console-address ":9001"
+    networks:
+      - homestead
+
+  # ==========================================
+  # Meilisearch (搜索引擎)
+  # ==========================================
+  meilisearch:
+    image: getmeili/meilisearch:latest
+    container_name: homestead_meilisearch
+    restart: unless-stopped
+    ports:
+      - "${MEILISEARCH_PORT:-7700}:7700"
+    environment:
+      MEILI_MASTER_KEY: homesteadmasterkey
+      MEILI_ENV: development
+      TZ: Asia/Shanghai
+    volumes:
+      - meilisearch_data:/meili_data
+    networks:
+      - homestead
+
+  # ==========================================
+  # Composer 独立容器 (用于运行 composer 命令)
+  # ==========================================
+  composer:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      target: final
+    container_name: homestead_composer
+    volumes:
+      - ./projects:/app
+      - composer_cache:/root/.composer
+    working_dir: /app
+    entrypoint: ["/usr/local/bin/composer"]
+    networks:
+      - homestead
+
+  # ==========================================
+  # Artisan 命令行容器
+  # ==========================================
+  artisan:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      target: final
+    container_name: homestead_artisan
+    volumes:
+      - ./projects:/var/www/html
+      - ./php/php.ini:/etc/php/8.4/cli/conf.d/99-custom.ini:ro
+    working_dir: /var/www/html
+    depends_on:
+      - mysql
+      - redis
+    entrypoint: ["php", "artisan"]
+    networks:
+      - homestead
+
+  # ==========================================
+  # PHPUnit 测试容器
+  # ==========================================
+  phpunit:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      target: final
+    container_name: homestead_phpunit
+    volumes:
+      - ./projects:/var/www/html
+      - ./php/php.ini:/etc/php/8.4/cli/conf.d/99-custom.ini:ro
+      - ./php/xdebug.ini:/etc/php/8.4/mods-available/xdebug.ini:ro
+    working_dir: /var/www/html
+    entrypoint: ["./vendor/bin/phpunit"]
+    networks:
+      - homestead
+
+  # ==========================================
+  # npm/Node 容器
+  # ==========================================
+  node:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      target: final
+    container_name: homestead_node
+    volumes:
+      - ./projects:/app
+    working_dir: /app
+    entrypoint: ["npm"]
+    networks:
+      - homestead
+
+# ==========================================
+# 网络配置
+# ==========================================
+networks:
+  homestead:
+    driver: bridge
+
+# ==========================================
+# 数据卷配置
+# ==========================================
+volumes:
+  mysql_data:
+    driver: local
+  postgres_data:
+    driver: local
+  redis_data:
+    driver: local
+  minio_data:
+    driver: local
+  meilisearch_data:
+    driver: local
+  composer_cache:
+    driver: local
