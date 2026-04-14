@@ -1,4 +1,5 @@
-FROM 1panel/1panel:latest
+#FROM 1panel/1panel:latest
+FROM moelin/1panel:latest
 
 # 设置时区
 ENV TZ=Asia/Shanghai
