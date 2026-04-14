@@ -72,29 +72,29 @@ services:
 #    networks:
 #      - default
 
-#  php84:
-#    build:
-#      context: ./services/php84
-#      args:
-#        PHP_VERSION: php:8.4.19-fpm-alpine
-#        CONTAINER_PACKAGE_URL: ${CONTAINER_PACKAGE_URL}
-#        COMPOSER_URL: ${COMPOSER_URL}
-#        PHP_EXTENSIONS: ${PHP84_EXTENSIONS}
-#        TZ: "$TZ"
-#    container_name: php84
-#    expose:
-#      - 9501
-#    volumes:
-#      - ${SOURCE_DIR}:/www/:rw
-#      - ${PHP84_PHP_CONF_FILE}:/usr/local/etc/php/php.ini
-#      - ${PHP84_FPM_CONF_FILE}:/usr/local/etc/php-fpm.d/www.conf
-#      - ${PHP84_LOG_DIR}:/var/log/php
-#      - ${PHP84_DATA_COMPOSER}:/tmp/composer
-#    restart: always
-#    cap_add:
-#      - SYS_PTRACE
-#    networks:
-#        - default
+  php84:
+    build:
+      context: ./services/php84
+      args:
+        PHP_VERSION: php:8.4.19-fpm-alpine
+        CONTAINER_PACKAGE_URL: ${CONTAINER_PACKAGE_URL}
+        COMPOSER_URL: ${COMPOSER_URL}
+        PHP_EXTENSIONS: ${PHP84_EXTENSIONS}
+        TZ: "$TZ"
+    container_name: php84
+    expose:
+      - 9501
+    volumes:
+      - ${SOURCE_DIR}:/www/:rw
+      - ${PHP84_PHP_CONF_FILE}:/usr/local/etc/php/php.ini
+      - ${PHP84_FPM_CONF_FILE}:/usr/local/etc/php-fpm.d/www.conf
+      - ${PHP84_LOG_DIR}:/var/log/php
+      - ${PHP84_DATA_COMPOSER}:/tmp/composer
+    restart: always
+    cap_add:
+      - SYS_PTRACE
+    networks:
+        - default
 
   php83:
     build:
@@ -219,6 +219,25 @@ services:
       - SYS_PTRACE
     networks:
       - default
+
+#  postgres:
+#    image: postgres:${POSTGRES_VERSION}
+#    container_name: postgres
+#    ports:
+#      - "${POSTGRES_HOST_PORT}:5432"
+#    volumes:
+#      - ${POSTGRES_CONF_FILE}:/etc/postgres/conf.d/postgres.cnf:ro
+#      - ${DATA_DIR}/postgres:/var/lib/postgres/:rw
+#      - ${POSTGRES_LOG_DIR}:/var/log/postgres/:rw
+#
+#    restart: always
+#    networks:
+#      - default
+#    environment:
+#      POSTGRES_USER: "${POSTGRES_USER}"
+#      POSTGRES_DB: "${POSTGRES_DB}"
+#      POSTGRES_PASSWORD: "${POSTGRES_ROOT_PASSWORD}"
+#      TZ: "$TZ"
 
   # mysql 8.0.45
   mysql:
@@ -662,28 +681,29 @@ services:
 #      - default
 
   # 1Panel v2
-#  1panel-v2:
-
-
-#    container_name: 1panel-v2
-#    restart: always
-#    # network_mode: "host"  # 删除这行
-#    ports:
-#      - "${PANEL_HOST_PORT}:${PANEL_HOST_PORT}"  # 添加端口映射
-#    volumes:
-#      - /var/run/docker.sock:/var/run/docker.sock
-#      - ${PANEL_SOURCE_DIR}:/www/:rw
-#    environment:
-#      - TZ=Asia/Shanghai
-#      - PORT=${PANEL_HOST_PORT}
-#      - USERNAME=${PANEL_USERNAME}
-#      - PASSWORD=${PANEL_PASSWORD}
-#      - ENTRANCE=${PANEL_ENTRANCE}
-#      - BASE_DIR=${PANEL_BASE_DIR}
-#    image: moelin/1panel:v2
-#    labels:
-#      createdBy: "Apps"
-
+  1panel:
+    build:
+      context: ./services/1panel
+    container_name: 1panel
+    restart: always
+    ports:
+      - "${PANEL_HOST_PORT}:${PANEL_HOST_PORT}"
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - ${PANEL_SOURCE_DIR}:/www/:rw
+      - ${PANEL_APP_DIR}:/var/lib/docker
+      - ${PANEL_LOG_DIR}:/var/log/go/:rw
+      - ${PANEL_OPT_DIR}:/opt
+    environment:
+      TZ: "$TZ"
+      PANEL_USERNAME: "${PANEL_USERNAME}"
+      PANEL_PASSWORD: "${PANEL_PASSWORD}"
+      PANEL_ENTRANCE: "${PANEL_ENTRANCE}"
+      PANEL_BASE_DIR: "${PANEL_BASE_DIR}"
+    labels:
+      createdBy: "Apps"
+    networks:
+      - default
 
 #  supervisor:
 #    build:
