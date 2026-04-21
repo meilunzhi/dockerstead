@@ -595,3 +595,13 @@ logs/*
 /data/spug/service/spug_api/spug/overrides.py
 /data/spug/service/spug_api/manage.py
 /data/spug/service/spug_web/._build
+/data/dpanel/logs/dpanel.log
+/data/dpanel/dpanel.db
+/data/public/backups/portainer.db.bak
+/data/public/certs/cert.pem
+/data/public/certs/key.pem
+/data/public/chisel/private-key.pem
+/data/public/docker_config/config.json
+/data/public/portainer.db
+/data/public/portainer.key
+/data/public/portainer.pub
