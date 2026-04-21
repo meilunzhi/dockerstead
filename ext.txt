@@ -1,160 +1,159 @@
-Extension	PHP 8.5	PHP 8.4	PHP 8.3	PHP 8.2	PHP 8.1	PHP 8.0	PHP 7.4	PHP 7.3	PHP 7.2	PHP 7.1	PHP 7.0	PHP 5.6	PHP 5.5
-amqp	✓	✓	✓	✓	✓	✓	✓	✓	✓	✓	✓	✓	✓
-apcu	✓	✓	✓	✓	✓	✓	✓	✓	✓	✓	✓	✓	✓
-apcu_bc							✓	✓	✓	✓	✓
-ast	✓	✓	✓	✓	✓	✓	✓	✓	✓	✓	✓
-bcmath	✓	✓	✓	✓	✓	✓	✓	✓	✓	✓	✓	✓	✓
-bitset	✓	✓	✓	✓	✓	✓	✓	✓	✓	✓	✓	✓	✓
-blackfire	✓	✓	✓	✓	✓	✓	✓	✓	✓	✓	✓	✓	✓
-brotli	✓	✓	✓	✓	✓	✓	✓	✓	✓	✓	✓
-bz2	✓	✓	✓	✓	✓	✓	✓	✓	✓	✓	✓	✓	✓
-calendar	✓	✓	✓	✓	✓	✓	✓	✓	✓	✓	✓	✓	✓
-cassandra*	✓	✓	✓	✓	✓	✓	✓	✓	✓
-cmark							✓	✓	✓	✓	✓
-csv	✓	✓	✓	✓	✓	✓	✓	✓
-dba	✓	✓	✓	✓	✓	✓	✓	✓	✓	✓	✓	✓	✓
-ddtrace*	✓	✓	✓	✓	✓	✓	✓	✓	✓	✓	✓	✓
-decimal	✓	✓	✓	✓	✓	✓	✓	✓	✓	✓	✓
-ds	✓	✓	✓	✓	✓	✓	✓	✓	✓	✓	✓
-ecma_intl*			✓	✓
-enchant	✓	✓	✓	✓	✓	✓	✓	✓	✓	✓	✓	✓	✓
-ev	✓	✓	✓	✓	✓	✓	✓	✓	✓	✓	✓	✓	✓
-event	✓	✓	✓	✓	✓	✓	✓	✓	✓	✓	✓	✓	✓
-excimer	✓	✓	✓	✓	✓	✓	✓	✓	✓	✓
-exif	✓	✓	✓	✓	✓	✓	✓	✓	✓	✓	✓	✓	✓
-ffi	✓	✓	✓	✓	✓	✓	✓
-ftp	✓	✓	✓	✓
-gd	✓	✓	✓	✓	✓	✓	✓	✓	✓	✓	✓	✓	✓
-gearman		✓	✓	✓	✓	✓	✓	✓	✓	✓	✓	✓	✓
-geoip							✓	✓	✓	✓	✓	✓	✓
-geos*		✓	✓	✓	✓	✓	✓	✓	✓	✓	✓	✓	✓
-geospatial	✓	✓	✓	✓	✓	✓	✓	✓	✓	✓	✓	✓	✓
-gettext	✓	✓	✓	✓	✓	✓	✓	✓	✓	✓	✓	✓	✓
-gmagick		✓	✓	✓	✓	✓	✓	✓	✓	✓	✓	✓	✓
-gmp	✓	✓	✓	✓	✓	✓	✓	✓	✓	✓	✓	✓	✓
-gnupg	✓	✓	✓	✓	✓	✓	✓	✓	✓	✓	✓	✓	✓
-grpc	✓	✓	✓	✓	✓	✓	✓	✓	✓	✓	✓	✓	✓
-http	✓	✓	✓	✓	✓	✓	✓	✓	✓	✓	✓	✓	✓
-igbinary	✓	✓	✓	✓	✓	✓	✓	✓	✓	✓	✓	✓	✓
-imagick	✓	✓	✓	✓	✓	✓	✓	✓	✓	✓	✓	✓	✓
-imap	✓	✓	✓	✓	✓	✓	✓	✓	✓	✓	✓	✓	✓
-inotify	✓	✓	✓	✓	✓	✓	✓	✓	✓	✓	✓	✓	✓
-interbase								✓	✓	✓	✓	✓	✓
-intl	✓	✓	✓	✓	✓	✓	✓	✓	✓	✓	✓	✓	✓
-ion	✓	✓	✓	✓	✓
-ioncube_loader	✓	✓	✓	✓	✓		✓	✓	✓	✓	✓	✓	✓
-ip2location	✓	✓	✓	✓	✓	✓
-jsmin							✓	✓	✓	✓	✓	✓	✓
-json_post	✓	✓	✓	✓	✓	✓	✓	✓	✓	✓	✓	✓	✓
-jsonpath	✓	✓	✓	✓	✓	✓	✓
-judy*	✓	✓	✓	✓	✓	✓
-ldap	✓	✓	✓	✓	✓	✓	✓	✓	✓	✓	✓	✓	✓
-luasandbox	✓	✓	✓	✓	✓	✓	✓	✓	✓	✓	✓	✓	✓
-lz4*	✓	✓	✓	✓	✓	✓	✓	✓	✓	✓	✓	✓
-lzf	✓	✓	✓	✓	✓	✓	✓	✓	✓	✓	✓	✓	✓
-mailparse	✓	✓	✓	✓	✓	✓	✓	✓	✓	✓	✓	✓	✓
-maxminddb	✓	✓	✓	✓	✓	✓	✓	✓	✓
-mcrypt	✓	✓	✓	✓	✓	✓	✓	✓	✓	✓	✓	✓	✓
-md4c	✓	✓	✓	✓	✓	✓
-memcache		✓	✓	✓	✓	✓	✓	✓	✓	✓	✓	✓	✓
-memcached	✓	✓	✓	✓	✓	✓	✓	✓	✓	✓	✓	✓	✓
-memprof*	✓	✓	✓	✓	✓	✓	✓	✓	✓	✓	✓	✓	✓
-mongo												✓	✓
-mongodb	✓	✓	✓	✓	✓	✓	✓	✓	✓	✓	✓	✓	✓
-mosquitto							✓	✓	✓	✓	✓	✓	✓
-msgpack	✓	✓	✓	✓	✓	✓	✓	✓	✓	✓	✓	✓	✓
-mssql												✓	✓
-mysql												✓	✓
-mysqli	✓	✓	✓	✓	✓	✓	✓	✓	✓	✓	✓	✓	✓
-newrelic		✓	✓	✓	✓	✓	✓	✓	✓	✓	✓
-nsq		✓	✓	✓	✓	✓	✓	✓	✓	✓	✓
-oauth	✓	✓	✓	✓	✓	✓	✓	✓	✓	✓	✓	✓	✓
-oci8	✓	✓	✓	✓	✓	✓	✓	✓	✓	✓	✓	✓	✓
-odbc	✓	✓	✓	✓	✓	✓	✓	✓	✓	✓	✓	✓	✓
-opcache	✓	✓	✓	✓	✓	✓	✓	✓	✓	✓	✓	✓	✓
-opencensus			✓	✓	✓	✓	✓	✓	✓	✓	✓
-openswoole	✓	✓	✓	✓	✓	✓	✓	✓	✓
-opentelemetry	✓	✓	✓	✓	✓	✓
-operator	✓	✓	✓	✓
-parallel*	✓	✓	✓	✓	✓	✓	✓	✓	✓	✓
-parle*		✓	✓	✓	✓	✓	✓	✓	✓	✓	✓
-pcntl	✓	✓	✓	✓	✓	✓	✓	✓	✓	✓	✓	✓	✓
-pcov	✓	✓	✓	✓	✓	✓	✓	✓	✓	✓	✓
-pdo_dblib	✓	✓	✓	✓	✓	✓	✓	✓	✓	✓	✓	✓	✓
-pdo_firebird	✓	✓	✓	✓	✓	✓	✓	✓	✓	✓	✓	✓	✓
-pdo_mysql	✓	✓	✓	✓	✓	✓	✓	✓	✓	✓	✓	✓	✓
-pdo_oci	✓	✓	✓	✓	✓	✓	✓	✓	✓	✓	✓
-pdo_odbc	✓	✓	✓	✓	✓	✓	✓	✓	✓	✓	✓	✓	✓
-pdo_pgsql	✓	✓	✓	✓	✓	✓	✓	✓	✓	✓	✓	✓	✓
-pdo_snowflake*		✓	✓	✓	✓
-pdo_sqlsrv	✓	✓	✓	✓	✓	✓	✓	✓	✓	✓	✓
-pgsql	✓	✓	✓	✓	✓	✓	✓	✓	✓	✓	✓	✓	✓
-phalcon		✓	✓	✓	✓	✓	✓	✓	✓
-php_trie		✓	✓	✓	✓	✓	✓	✓
-phpy*	✓	✓	✓	✓	✓
-pkcs11	✓	✓	✓	✓	✓	✓	✓
-pq	✓	✓	✓	✓	✓	✓	✓	✓	✓	✓	✓
-propro							✓	✓	✓	✓	✓	✓	✓
-protobuf	✓	✓	✓	✓	✓	✓	✓	✓	✓	✓	✓	✓	✓
-pspell	✓	✓	✓	✓	✓	✓	✓	✓	✓	✓	✓	✓	✓
-psr	✓	✓	✓	✓	✓	✓	✓	✓	✓	✓	✓	✓	✓
-pthreads*											✓	✓	✓
-raphf	✓	✓	✓	✓	✓	✓	✓	✓	✓	✓	✓	✓	✓
-rdkafka	✓	✓	✓	✓	✓	✓	✓	✓	✓	✓	✓	✓	✓
-recode								✓	✓	✓	✓	✓	✓
-redis	✓	✓	✓	✓	✓	✓	✓	✓	✓	✓	✓	✓	✓
-relay	✓	✓	✓	✓	✓	✓	✓
-saxon*	✓	✓	✓	✓	✓	✓	✓	✓	✓	✓	✓
-seasclick*	✓	✓	✓	✓	✓	✓	✓	✓	✓	✓	✓	✓	✓
-seaslog			✓	✓	✓	✓	✓	✓	✓	✓	✓	✓	✓
-shmop	✓	✓	✓	✓	✓	✓	✓	✓	✓	✓	✓	✓	✓
-simdjson*	✓	✓	✓	✓	✓	✓	✓	✓	✓	✓
-smbclient	✓	✓	✓	✓	✓	✓	✓	✓	✓	✓	✓	✓	✓
-snappy	✓	✓	✓	✓	✓	✓	✓	✓	✓	✓	✓	✓	✓
-snmp	✓	✓	✓	✓	✓	✓	✓	✓	✓	✓	✓	✓	✓
-snuffleupagus	✓	✓	✓	✓	✓	✓	✓	✓	✓	✓	✓
-soap	✓	✓	✓	✓	✓	✓	✓	✓	✓	✓	✓	✓	✓
-sockets	✓	✓	✓	✓	✓	✓	✓	✓	✓	✓	✓	✓	✓
-sodium*										✓	✓	✓
-solr	✓	✓	✓	✓	✓	✓	✓	✓	✓	✓	✓	✓	✓
-sourceguardian	✓	✓	✓	✓	✓	✓	✓	✓	✓	✓	✓	✓	✓
-spx	✓	✓	✓	✓	✓	✓	✓	✓	✓	✓	✓	✓	✓
-sqlsrv*	✓	✓	✓	✓	✓	✓	✓	✓	✓	✓	✓
-ssh2	✓	✓	✓	✓	✓	✓	✓	✓	✓	✓	✓	✓	✓
-stomp		✓	✓	✓			✓	✓	✓	✓	✓	✓	✓
-swoole	✓	✓	✓	✓	✓	✓	✓	✓	✓	✓	✓	✓	✓
-sybase_ct												✓	✓
-sync		✓	✓	✓	✓	✓	✓	✓	✓	✓	✓	✓	✓
-sysvmsg	✓	✓	✓	✓	✓	✓	✓	✓	✓	✓	✓	✓	✓
-sysvsem	✓	✓	✓	✓	✓	✓	✓	✓	✓	✓	✓	✓	✓
-sysvshm	✓	✓	✓	✓	✓	✓	✓	✓	✓	✓	✓	✓	✓
-tensor				✓	✓	✓	✓	✓	✓
-tideways		✓	✓	✓	✓	✓	✓	✓	✓	✓	✓	✓	✓
-tidy	✓	✓	✓	✓	✓	✓	✓	✓	✓	✓	✓	✓	✓
-timezonedb	✓	✓	✓	✓	✓	✓	✓	✓	✓	✓	✓	✓	✓
-translit	✓	✓	✓	✓	✓	✓	✓	✓	✓	✓	✓	✓	✓
-uopz			✓	✓	✓	✓	✓	✓	✓	✓	✓	✓	✓
-uploadprogress	✓	✓	✓	✓	✓	✓	✓	✓	✓	✓	✓	✓	✓
-uuid	✓	✓	✓	✓	✓	✓	✓	✓	✓	✓	✓	✓	✓
-uv	✓	✓	✓	✓	✓	✓
-vips*	✓	✓	✓	✓	✓	✓	✓	✓	✓	✓	✓
-vld	✓	✓	✓	✓	✓	✓	✓	✓	✓	✓	✓	✓	✓
-wddx								✓	✓	✓	✓	✓	✓
-wikidiff2*	✓	✓	✓	✓	✓	✓	✓	✓	✓	✓
-xattr	✓	✓	✓	✓	✓	✓	✓	✓	✓	✓	✓	✓	✓
-xdebug	✓	✓	✓	✓	✓	✓	✓	✓	✓	✓	✓	✓	✓
-xdiff	✓	✓	✓	✓	✓	✓	✓	✓	✓	✓	✓	✓	✓
-xhprof	✓	✓	✓	✓	✓	✓	✓	✓	✓	✓	✓	✓	✓
-xlswriter	✓	✓	✓	✓	✓	✓	✓	✓	✓	✓	✓
-xmldiff	✓	✓	✓	✓	✓	✓	✓	✓	✓	✓	✓	✓	✓
-xmlrpc	✓	✓	✓	✓	✓	✓	✓	✓	✓	✓	✓	✓	✓
-xpass*	✓	✓	✓	✓	✓	✓
-xsl	✓	✓	✓	✓	✓	✓	✓	✓	✓	✓	✓	✓	✓
-yac	✓	✓	✓	✓	✓	✓	✓	✓	✓	✓	✓
-yaml	✓	✓	✓	✓	✓	✓	✓	✓	✓	✓	✓	✓	✓
-yar	✓	✓	✓	✓	✓	✓	✓	✓	✓	✓	✓	✓	✓
-zephir_parser	✓	✓	✓	✓	✓	✓	✓	✓	✓	✓	✓
-zip	✓	✓	✓	✓	✓	✓	✓	✓	✓	✓	✓	✓	✓
-zmq		✓	✓	✓	✓	✓	✓	✓	✓	✓	✓	✓	✓
-zookeeper	✓	✓	✓	✓	✓	✓	✓	✓	✓	✓	✓	✓	✓
+amqp,
+apcu,
+apcu_bc
+ast,
+bcmath,
+bitset,
+blackfire,
+brotli,
+bz2,
+calendar,
+cassandra*,
+cmark,
+csv,
+dba,
+ddtrace*,
+decimal,
+ds,
+ecma_intl*
+enchant,
+ev,
+event,
+excimer,
+exif,
+ffi,
+ftp,
+gd,
+gearman,
+geoip,
+geos*,
+geospatial,
+gettext,
+gmagick,
+gmp,
+gnupg,
+grpc,
+http,
+igbinary,
+imagick,
+imap,
+inotify,
+interbase,
+intl,
+ion,
+ioncube_loader,
+ip2location,
+jsmin,
+json_post,
+jsonpath,
+judy*,
+ldap,
+luasandbox,
+lz4*,
+lzf,
+mailparse,
+maxminddb,
+mcrypt,
+md4c,
+memcache,
+memcached,
+memprof*,
+mongo,
+mongodb,
+mosquitto,
+msgpack,
+mssql,
+mysql,
+mysqli,
+newrelic,
+nsq,
+oauth,
+oci8,
+odbc,
+opcache,
+opencensus,
+openswoole,
+opentelemetry,
+operator,
+parallel*,
+parle*,
+pcntl,
+pcov,
+pdo_dblib,
+pdo_firebird,
+pdo_mysql,
+pdo_oci,
+pdo_odbc,
+pdo_pgsql,
+pdo_snowflake*
+pdo_sqlsrv,
+pgsql,
+phalcon,
+php_trie,
+phpy*,
+pkcs11,
+pq,
+propro,
+protobuf,
+pspell,
+psr,
+pthreads*,
+raphf,
+rdkafka,
+recode,
+redis,
+relay,
+saxon*,
+seasclick*,
+seaslog,
+shmop,
+simdjson*
+smbclient,
+snappy,
+snmp,
+snuffleupagus,
+soap,
+sockets,
+sodium*
+solr,
+sourceguardian,
+spx,
+sqlsrv*,
+ssh2,
+stomp,
+swoole,
+sybase_ct,
+sync,
+sysvmsg,
+sysvsem,
+sysvshm,
+tensor,
+tideways,
+tidy,
+timezonedb,
+translit,
+uopz,
+uploadprogress,
+uuid,
+uv,
+vips*,
+vld,
+wddx,
+wikidiff2*,
+xattr,
+xdebug,
+xdiff,
+xhprof,
+xlswriter,
+xmldiff,
+xmlrpc,
+xpass*,
+xsl,
+yac,
+yaml,
+yar,
+zephir_parser,
+zip,
+zmq,
+zookeeper,
 zstd
