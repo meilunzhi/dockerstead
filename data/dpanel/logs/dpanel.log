@@ -1,9 +1,84 @@
-[2026-04-09 16:23:28.588]	[WARN]	default	DPanel is a lightweight container management panel; visit https://deepanel.com for more information.
-[2026-04-09 16:23:28.592]	[INFO]	default	config	{"env": "production", "version": "1.10.2", "date": "[2026-04-09 16:23:28.592]"}
-[2026-04-09 16:23:28.592]	[INFO]	default	config	{"storage": "/dpanel"}
-[2026-04-09 16:23:28.833]	[INFO]	default	main	{"migrate": "1.1.1"}
-[2026-04-09 16:23:28.839]	[INFO]	default	main	{"migrate": "1.5.2"}
-[2026-04-09 16:23:28.851]	[INFO]	default	main	{"migrate": "1.5.3"}
-[2026-04-09 16:23:28.857]	[INFO]	default	main	{"migrate": "1.6.3"}
-[2026-04-09 16:23:28.868]	[INFO]	default	main	{"migrate": "1.7.0"}
-[2026-04-09 16:23:29.200]	[INFO]	default	provider load community edition
+[2026-04-16 17:05:29.294]	[WARN]	default	DPanel is a lightweight container management panel; visit https://deepanel.com for more information.
+[2026-04-16 17:05:29.312]	[INFO]	default	config	{"env": "production", "version": "1.10.2", "date": "[2026-04-16 17:05:29.312]"}
+[2026-04-16 17:05:29.313]	[INFO]	default	config	{"storage": "/dpanel"}
+[2026-04-16 17:05:29.963]	[INFO]	default	main	{"migrate": "1.1.1"}
+[2026-04-16 17:05:29.975]	[INFO]	default	main	{"migrate": "1.5.2"}
+[2026-04-16 17:05:29.997]	[INFO]	default	main	{"migrate": "1.5.3"}
+[2026-04-16 17:05:30.006]	[INFO]	default	main	{"migrate": "1.6.3"}
+[2026-04-16 17:05:30.026]	[INFO]	default	main	{"migrate": "1.7.0"}
+[2026-04-16 17:05:30.204]	[INFO]	default	provider load community edition
+[2026-04-16 17:40:29.389]	[WARN]	default	DPanel is a lightweight container management panel; visit https://deepanel.com for more information.
+[2026-04-16 17:40:29.392]	[INFO]	default	config	{"env": "production", "version": "1.10.2", "date": "[2026-04-16 17:40:29.392]"}
+[2026-04-16 17:40:29.392]	[INFO]	default	config	{"storage": "/dpanel"}
+[2026-04-16 17:40:29.669]	[INFO]	default	main	{"migrate": "1.1.1"}
+[2026-04-16 17:40:29.676]	[INFO]	default	main	{"migrate": "1.5.2"}
+[2026-04-16 17:40:29.690]	[INFO]	default	main	{"migrate": "1.5.3"}
+[2026-04-16 17:40:29.699]	[INFO]	default	main	{"migrate": "1.6.3"}
+[2026-04-16 17:40:29.714]	[INFO]	default	main	{"migrate": "1.7.0"}
+[2026-04-16 17:40:29.790]	[INFO]	default	provider load community edition
+[2026-04-16 18:12:37.707]	[INFO]	default	runtime	{"url": "/dpanel/api/common/user/get-user-info", "goroutine": "17", "client": 0, "progress": 0, "alloc": "4MB", "sys": "26MB", "heapIdle": "12MB", "heapRelease": "5MB", "heapKeep": "6MB", "stk": "0MB", "gc": "22", "gcpu": "0%", "stw": "7ms"}
+[2026-04-16 18:12:37.718]	[ERROR]	default	{"createdAt":"2026-04-16T17:40:29.380377988+08:00","message":"null","title":".unauthorized","type":"error"}
+github.com/we7coreteam/w7-rangine-go/v2@v2.0.8/src/http/response/response.go:66 (0x1b63216)
+github.com/we7coreteam/w7-rangine-go/v2@v2.0.8/src/http/response/response.go:60 (0x1bdedda)
+github.com/donknap/dpanel/common/middleware/auth.go:88 (0x1bdedac)
+github.com/gin-gonic/gin@v1.12.0/context.go:192 (0x13fedde)
+github.com/gin-gonic/gin@v1.12.0/recovery.go:90 (0x140df70)
+github.com/gin-gonic/gin@v1.12.0/context.go:192 (0x13fedde)
+github.com/donknap/dpanel/common/middleware/debug.go:44 (0x1bdfbae)
+github.com/gin-gonic/gin@v1.12.0/context.go:192 (0x13fedde)
+
+[2026-04-16 18:12:37.718]	[ERROR]	default	{"createdAt":"2026-04-16T17:40:29.380377988+08:00","message":"null","title":".unauthorized","type":"error"}
+github.com/we7coreteam/w7-rangine-go/v2@v2.0.8/src/http/response/response.go:66 (0x1b63216)
+github.com/we7coreteam/w7-rangine-go/v2@v2.0.8/src/http/response/response.go:60 (0x1bdedda)
+github.com/donknap/dpanel/common/middleware/auth.go:88 (0x1bdedac)
+github.com/gin-gonic/gin@v1.12.0/context.go:192 (0x13fedde)
+github.com/gin-gonic/gin@v1.12.0/recovery.go:90 (0x140df70)
+github.com/gin-gonic/gin@v1.12.0/context.go:192 (0x13fedde)
+github.com/donknap/dpanel/common/middleware/debug.go:44 (0x1bdfbae)
+github.com/gin-gonic/gin@v1.12.0/context.go:192 (0x13fedde)
+
+[2026-04-16 18:12:37.909]	[INFO]	default	runtime	{"url": "/dpanel/api/common/user/get-user-info", "goroutine": "20", "client": 0, "progress": 0, "alloc": "8MB", "sys": "26MB", "heapIdle": "8MB", "heapRelease": "2MB", "heapKeep": "6MB", "stk": "0MB", "gc": "23", "gcpu": "0%", "stw": "7ms"}
+[2026-04-16 18:12:37.917]	[ERROR]	default	{"createdAt":"2026-04-16T17:40:29.380377988+08:00","message":"null","title":".unauthorized","type":"error"}
+github.com/we7coreteam/w7-rangine-go/v2@v2.0.8/src/http/response/response.go:66 (0x1b63216)
+github.com/we7coreteam/w7-rangine-go/v2@v2.0.8/src/http/response/response.go:60 (0x1bdedda)
+github.com/donknap/dpanel/common/middleware/auth.go:88 (0x1bdedac)
+github.com/gin-gonic/gin@v1.12.0/context.go:192 (0x13fedde)
+github.com/gin-gonic/gin@v1.12.0/recovery.go:90 (0x140df70)
+github.com/gin-gonic/gin@v1.12.0/context.go:192 (0x13fedde)
+github.com/donknap/dpanel/common/middleware/debug.go:44 (0x1bdfbae)
+github.com/gin-gonic/gin@v1.12.0/context.go:192 (0x13fedde)
+
+[2026-04-16 18:12:37.919]	[ERROR]	default	{"createdAt":"2026-04-16T17:40:29.380377988+08:00","message":"null","title":".unauthorized","type":"error"}
+github.com/we7coreteam/w7-rangine-go/v2@v2.0.8/src/http/response/response.go:66 (0x1b63216)
+github.com/we7coreteam/w7-rangine-go/v2@v2.0.8/src/http/response/response.go:60 (0x1bdedda)
+github.com/donknap/dpanel/common/middleware/auth.go:88 (0x1bdedac)
+github.com/gin-gonic/gin@v1.12.0/context.go:192 (0x13fedde)
+github.com/gin-gonic/gin@v1.12.0/recovery.go:90 (0x140df70)
+github.com/gin-gonic/gin@v1.12.0/context.go:192 (0x13fedde)
+github.com/donknap/dpanel/common/middleware/debug.go:44 (0x1bdfbae)
+github.com/gin-gonic/gin@v1.12.0/context.go:192 (0x13fedde)
+
+[2026-04-16 18:12:38.318]	[INFO]	default	runtime	{"url": "/dpanel/api/common/user/login-info", "goroutine": "20", "client": 0, "progress": 0, "alloc": "12MB", "sys": "27MB", "heapIdle": "4MB", "heapRelease": "1MB", "heapKeep": "2MB", "stk": "1MB", "gc": "23", "gcpu": "0%", "stw": "7ms"}
+[2026-04-16 18:12:45.915]	[INFO]	default	runtime	{"url": "/dpanel/api/common/user/create-founder", "goroutine": "19", "client": 0, "progress": 0, "alloc": "12MB", "sys": "27MB", "heapIdle": "4MB", "heapRelease": "1MB", "heapKeep": "2MB", "stk": "1MB", "gc": "23", "gcpu": "0%", "stw": "7ms"}
+[2026-04-16 18:12:45.978]	[INFO]	default	runtime	{"url": "/dpanel/api/common/user/login", "goroutine": "19", "client": 0, "progress": 0, "alloc": "12MB", "sys": "27MB", "heapIdle": "4MB", "heapRelease": "1MB", "heapKeep": "2MB", "stk": "1MB", "gc": "23", "gcpu": "0%", "stw": "7ms"}
+[2026-04-16 18:12:46.199]	[INFO]	default	runtime	{"url": "/dpanel/api/common/user/get-user-info", "goroutine": "22", "client": 0, "progress": 0, "alloc": "12MB", "sys": "27MB", "heapIdle": "3MB", "heapRelease": "1MB", "heapKeep": "2MB", "stk": "1MB", "gc": "23", "gcpu": "0%", "stw": "7ms"}
+[2026-04-16 18:12:46.211]	[INFO]	default	ws connect	{"fd": "fd:qaSyHRCbHmpNagvwd06dLA==", "goroutine": 22, "client total": 1, "progress total": 0}
+[2026-04-16 18:12:46.238]	[INFO]	default	runtime	{"url": "/dpanel/api/common/env/get-list", "goroutine": "23", "client": 1, "progress": 0, "alloc": "13MB", "sys": "27MB", "heapIdle": "3MB", "heapRelease": "1MB", "heapKeep": "1MB", "stk": "1MB", "gc": "23", "gcpu": "0%", "stw": "7ms"}
+[2026-04-16 18:12:46.517]	[INFO]	default	runtime	{"url": "/dpanel/api/common/notice/unread", "goroutine": "23", "client": 1, "progress": 0, "alloc": "14MB", "sys": "27MB", "heapIdle": "2MB", "heapRelease": "1MB", "heapKeep": "0MB", "stk": "1MB", "gc": "23", "gcpu": "0%", "stw": "7ms"}
+[2026-04-16 18:12:46.865]	[INFO]	default	runtime	{"url": "/dpanel/api/common/home/info", "goroutine": "28", "client": 1, "progress": 0, "alloc": "17MB", "sys": "31MB", "heapIdle": "3MB", "heapRelease": "0MB", "heapKeep": "2MB", "stk": "1MB", "gc": "24", "gcpu": "0%", "stw": "7ms"}
+[2026-04-16 18:12:46.865]	[INFO]	default	runtime	{"url": "/dpanel/api/common/home/check-new-version", "goroutine": "29", "client": 1, "progress": 0, "alloc": "17MB", "sys": "31MB", "heapIdle": "3MB", "heapRelease": "0MB", "heapKeep": "2MB", "stk": "1MB", "gc": "24", "gcpu": "0%", "stw": "7ms"}
+[2026-04-16 18:12:46.908]	[INFO]	default	runtime	{"url": "/dpanel/api/common/home/usage", "goroutine": "32", "client": 1, "progress": 0, "alloc": "17MB", "sys": "31MB", "heapIdle": "2MB", "heapRelease": "0MB", "heapKeep": "1MB", "stk": "1MB", "gc": "24", "gcpu": "0%", "stw": "7ms"}
+[2026-04-16 18:12:47.012]	[INFO]	default	runtime	{"url": "/dpanel/api/common/home/info", "goroutine": "37", "client": 1, "progress": 1, "alloc": "18MB", "sys": "31MB", "heapIdle": "2MB", "heapRelease": "0MB", "heapKeep": "1MB", "stk": "1MB", "gc": "24", "gcpu": "0%", "stw": "7ms"}
+[2026-04-16 18:12:47.104]	[INFO]	default	runtime	{"url": "/dpanel/api/common/home/get-stat-list", "goroutine": "36", "client": 1, "progress": 1, "alloc": "18MB", "sys": "31MB", "heapIdle": "1MB", "heapRelease": "0MB", "heapKeep": "1MB", "stk": "1MB", "gc": "24", "gcpu": "0%", "stw": "7ms"}
+[2026-04-16 18:12:55.836]	[INFO]	default	ws event	{"event": "progress:close", "fd": "fd:qaSyHRCbHmpNagvwd06dLA==", "message": "{\"type\":\"progress:close\",\"data\":\"container:stat\"}"}
+[2026-04-16 18:12:56.144]	[INFO]	default	runtime	{"url": "/dpanel/api/common/env/get-detail", "goroutine": "32", "client": 1, "progress": 0, "alloc": "12MB", "sys": "35MB", "heapIdle": "10MB", "heapRelease": "3MB", "heapKeep": "6MB", "stk": "1MB", "gc": "26", "gcpu": "0%", "stw": "8ms"}
+[2026-04-16 18:12:56.238]	[INFO]	default	runtime	{"url": "/dpanel/api/app/container/get-list", "goroutine": "31", "client": 1, "progress": 0, "alloc": "13MB", "sys": "35MB", "heapIdle": "10MB", "heapRelease": "3MB", "heapKeep": "6MB", "stk": "1MB", "gc": "26", "gcpu": "0%", "stw": "8ms"}
+[2026-04-16 18:12:56.350]	[INFO]	default	runtime	{"url": "/dpanel/api/common/tag/get-list", "goroutine": "31", "client": 1, "progress": 0, "alloc": "13MB", "sys": "35MB", "heapIdle": "9MB", "heapRelease": "3MB", "heapKeep": "5MB", "stk": "1MB", "gc": "26", "gcpu": "0%", "stw": "8ms"}
+[2026-04-16 18:12:56.440]	[INFO]	default	runtime	{"url": "/dpanel/api/common/home/get-stat-list", "goroutine": "34", "client": 1, "progress": 0, "alloc": "16MB", "sys": "35MB", "heapIdle": "7MB", "heapRelease": "2MB", "heapKeep": "4MB", "stk": "1MB", "gc": "26", "gcpu": "0%", "stw": "8ms"}
+[2026-04-16 18:13:05.509]	[INFO]	default	ws event	{"event": "progress:close", "fd": "fd:qaSyHRCbHmpNagvwd06dLA==", "message": "{\"type\":\"progress:close\",\"data\":\"image:pull:\"}"}
+[2026-04-16 18:13:05.572]	[INFO]	default	runtime	{"url": "/dpanel/api/app/site-cert/dns-api", "goroutine": "34", "client": 1, "progress": 0, "alloc": "17MB", "sys": "35MB", "heapIdle": "6MB", "heapRelease": "2MB", "heapKeep": "3MB", "stk": "1MB", "gc": "26", "gcpu": "0%", "stw": "8ms"}
+[2026-04-16 18:13:05.641]	[INFO]	default	runtime	{"url": "/dpanel/api/app/site-cert/get-list", "goroutine": "34", "client": 1, "progress": 0, "alloc": "17MB", "sys": "35MB", "heapIdle": "5MB", "heapRelease": "2MB", "heapKeep": "3MB", "stk": "1MB", "gc": "26", "gcpu": "0%", "stw": "8ms"}
+[2026-04-16 18:13:05.705]	[INFO]	default	runtime	{"url": "/dpanel/api/app/site-domain/get-list", "goroutine": "34", "client": 1, "progress": 0, "alloc": "18MB", "sys": "35MB", "heapIdle": "5MB", "heapRelease": "2MB", "heapKeep": "3MB", "stk": "1MB", "gc": "26", "gcpu": "0%", "stw": "8ms"}
+[2026-04-16 18:13:07.732]	[INFO]	default	stop read message goroutine	{"fd": "fd:qaSyHRCbHmpNagvwd06dLA=="}
+[2026-04-16 18:13:07.732]	[INFO]	default	docker client cancel
+[2026-04-16 18:13:07.752]	[WARN]	default	websocket	{"client close": "close tcp 172.19.0.11:8080->172.19.0.1:54820: use of closed network connection"}

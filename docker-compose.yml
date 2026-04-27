@@ -19,6 +19,19 @@ services:
       - default
 
 
+  it-tools:
+    build:
+      context: ./services/it-tools
+    image: ghcr.io/corentinth/it-tools:latest
+    container_name: it-tools
+    ports:
+      - 8888:80
+    volumes:
+      - ${SOURCE_DIR}:/www/:rw
+    restart: always
+    networks:
+      - default
+
 
 #  openresty:
 #    build:
