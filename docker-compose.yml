@@ -17,7 +17,23 @@ services:
     restart: always
     networks:
       - default
-
+# ============ 宝塔面板 ============
+#  panel:
+#    image: btpanel/baota:latest
+#    ports:
+#      - "38888:8888"
+#      - "8088:80"
+#      - "8443:443"
+#      - "33306:3306"
+#      - "22022:22"
+#      - "32888:888"
+#    volumes:
+#      - ${SOURCE_DIR}:/www/:rw
+#    labels:
+#      createdBy: "bt_apps"
+#    networks:
+#      - default
+#    restart: always
 
   it-tools:
     build:
