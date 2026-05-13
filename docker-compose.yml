@@ -38,7 +38,8 @@ services:
   it-tools:
     build:
       context: ./services/it-tools
-    image: ghcr.io/corentinth/it-tools:latest
+#    image: ghcr.io/corentinth/it-tools:latest
+    image: sharevb/it-tools:latest
     container_name: it-tools
     ports:
       - 8888:80
