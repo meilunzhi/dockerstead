@@ -1,5 +1,5 @@
 ARG PHP_VERSION
-FROM php:8.3.30-fpm-alpine
+FROM php:8.3.31-fpm-alpine
 
 ARG TZ
 ARG PHP_EXTENSIONS
@@ -32,7 +32,7 @@ ENV LD_PRELOAD /usr/lib/preloadable_libiconv.so php
 
 # Install composer and change it's cache home
 
-RUN curl -o /usr/bin/composer https://getcomposer.org/download/2.9.7/composer.phar \
+RUN curl -o /usr/bin/composer https://getcomposer.org/download/2.9.8/composer.phar \
     && chmod +x /usr/bin/composer
 ENV COMPOSER_HOME=/tmp/composer
 
