@@ -17,7 +17,37 @@ services:
     restart: always
     networks:
       - default
+# ============ 宝塔面板 ============
+#  panel:
+#    image: btpanel/baota:latest
+#    ports:
+#      - "38888:8888"
+#      - "8088:80"
+#      - "8443:443"
+#      - "33306:3306"
+#      - "22022:22"
+#      - "32888:888"
+#    volumes:
+#      - ${SOURCE_DIR}:/www/:rw
+#    labels:
+#      createdBy: "bt_apps"
+#    networks:
+#      - default
+#    restart: always
 
+  it-tools:
+    build:
+      context: ./services/it-tools
+    image: ghcr.io/corentinth/it-tools:latest
+#    image: sharevb/it-tools:latest
+    container_name: it-tools
+    ports:
+      - 8888:80
+    volumes:
+      - ${SOURCE_DIR}:/www/:rw
+    restart: always
+    networks:
+      - default
 
 
 #  openresty:
@@ -54,7 +84,7 @@ services:
 #    build:
 #      context: ./services/php85
 #      args:
-#        PHP_VERSION: php:8.5.4-fpm-alpine
+#        PHP_VERSION: php:8.5.6-fpm-alpine
 #        CONTAINER_PACKAGE_URL: ${CONTAINER_PACKAGE_URL}
 #        COMPOSER_URL: ${COMPOSER_URL}
 #        PHP_EXTENSIONS: ${PHP85_EXTENSIONS}
@@ -78,7 +108,7 @@ services:
     build:
       context: ./services/php84
       args:
-        PHP_VERSION: php:8.4.19-fpm-alpine
+        PHP_VERSION: php:8.4.21-fpm-alpine
         CONTAINER_PACKAGE_URL: ${CONTAINER_PACKAGE_URL}
         COMPOSER_URL: ${COMPOSER_URL}
         PHP_EXTENSIONS: ${PHP84_EXTENSIONS}
@@ -102,7 +132,7 @@ services:
     build:
       context: ./services/php83
       args:
-        PHP_VERSION: php:8.3.30-fpm-alpine
+        PHP_VERSION: php:8.3.31-fpm-alpine
         CONTAINER_PACKAGE_URL: ${CONTAINER_PACKAGE_URL}
         COMPOSER_URL: ${COMPOSER_URL}
         PHP_EXTENSIONS: ${PHP83_EXTENSIONS}

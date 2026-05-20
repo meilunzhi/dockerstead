@@ -1,10 +1,8 @@
-
 安装docker 到D盘
-start /w "" "Docker Desktop Installer.exe" install -accept-license --installation-dir="D:\Program\Docker" --wsl-default-data-root="D:\Program\Docker\data" --windows-containers-default-data-root="D:\Program\Docker"
-
 使用下面的参数
 # 使用 -ArgumentList 参数传递所有选项
 Start-Process -Wait -FilePath "Docker Desktop Installer.exe" -ArgumentList "install", "--quiet", "--accept-license", "--installation-dir=D:\Program\Docker", "--wsl-default-data-root=D:\Program\Docker\data", "--windows-containers-default-data-root=D:\Program\Docker"
+
 
 
 docker proxy
