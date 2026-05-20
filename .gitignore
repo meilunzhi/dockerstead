@@ -605,3 +605,4 @@ logs/*
 /data/public/portainer.db
 /data/public/portainer.key
 /data/public/portainer.pub
+spug
