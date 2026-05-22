@@ -17,6 +17,21 @@ services:
     restart: always
     networks:
       - default
+
+  showdoc:
+    image: star7th/showdoc:latest
+    container_name: showdoc
+    restart: always
+    ports:
+      - "4999:80"
+    volumes:
+      - /showdoc_data/html:/var/www/html/
+    environment:
+      - TZ=Asia/Shanghai
+    networks:
+      - default
+
+
 # ============ 宝塔面板 ============
 #  panel:
 #    image: btpanel/baota:latest
@@ -35,14 +50,39 @@ services:
 #      - default
 #    restart: always
 
+
+#  openproject:
+#    image: openproject/openproject:17.4.0
+#    container_name: openproject
+#    restart: always
+#    ports:
+#      - "8080:80"
+#    environment:
+#      - OPENPROJECT_SECRET_KEY_BASE=your_secret_key_here
+#      - OPENPROJECT_HOST__NAME=localhost:8080
+#      - OPENPROJECT_HTTPS=false
+#      - OPENPROJECT_DEFAULT__LANGUAGE=zh
+#    volumes:
+#      - openproject-data:/var/lib/openproject
+#    networks:
+#      - default
+#  volumes:
+#    openproject-data:
+#      driver: local
+#  networks:
+#    default:
+#      name: app-network
+#      driver: bridge
+
+
   it-tools:
     build:
       context: ./services/it-tools
-    image: ghcr.io/corentinth/it-tools:latest
-#    image: sharevb/it-tools:latest
+#    image: ghcr.io/corentinth/it-tools:latest
+    image: sharevb/it-tools:latest
     container_name: it-tools
     ports:
-      - 8888:80
+      - 8080:8080
     volumes:
       - ${SOURCE_DIR}:/www/:rw
     restart: always
@@ -152,29 +192,29 @@ services:
     networks:
         - default
 
-#  php82:
-#    build:
-#      context: ./services/php82
-#      args:
-#        PHP_VERSION: php:8.2.30-fpm-alpine
-#        CONTAINER_PACKAGE_URL: ${CONTAINER_PACKAGE_URL}
-#        COMPOSER_URL: ${COMPOSER_URL}
-#        PHP_EXTENSIONS: ${PHP82_EXTENSIONS}
-#        TZ: "$TZ"
-#    container_name: php82
-#    expose:
-#      - 9501
-#    volumes:
-#      - ${SOURCE_DIR}:/www/:rw
-#      - ${PHP82_PHP_CONF_FILE}:/usr/local/etc/php/php.ini
-#      - ${PHP82_FPM_CONF_FILE}:/usr/local/etc/php-fpm.d/www.conf
-#      - ${PHP82_LOG_DIR}:/var/log/php
-#      - ${PHP82_DATA_COMPOSER}:/tmp/composer
-#    restart: always
-#    cap_add:
-#      - SYS_PTRACE
-#    networks:
-#      - default
+  php82:
+    build:
+      context: ./services/php82
+      args:
+        PHP_VERSION: php:8.2.31-fpm-alpine
+        CONTAINER_PACKAGE_URL: ${CONTAINER_PACKAGE_URL}
+        COMPOSER_URL: ${COMPOSER_URL}
+        PHP_EXTENSIONS: ${PHP82_EXTENSIONS}
+        TZ: "$TZ"
+    container_name: php82
+    expose:
+      - 9501
+    volumes:
+      - ${SOURCE_DIR}:/www/:rw
+      - ${PHP82_PHP_CONF_FILE}:/usr/local/etc/php/php.ini
+      - ${PHP82_FPM_CONF_FILE}:/usr/local/etc/php-fpm.d/www.conf
+      - ${PHP82_LOG_DIR}:/var/log/php
+      - ${PHP82_DATA_COMPOSER}:/tmp/composer
+    restart: always
+    cap_add:
+      - SYS_PTRACE
+    networks:
+      - default
 
 #  php81:
 #    build:
@@ -333,6 +373,7 @@ services:
     networks:
       - default
 
+
 #  rabbitmq:
 #    build:
 #      context: ./services/rabbitmq
@@ -397,19 +438,19 @@ services:
 #      - default
 
   # Portainer - Docker 容器管理界面
-#  portainer:
-##    image: portainer/portainer:latest
-#    image: portainer/portainer-ce
-#    container_name: portainer
-#    ports:
-#      - "${PORTAINTER_HOST_PORT}:9000"
-#    volumes:
-#      - /var/run/docker.sock:/var/run/docker.sock
-#      - ${PORTAINTER_DATA_DIR}:/data
-#      - ${PORTAINTER_PUBLIC_DIR}:/data
-#    restart: always
-#    networks:
-#      - default
+  portainer:
+#    image: portainer/portainer:latest
+    image: portainer/portainer-ce
+    container_name: portainer
+    ports:
+      - "${PORTAINTER_HOST_PORT}:9000"
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - ${PORTAINTER_DATA_DIR}:/data
+      - ${PORTAINTER_PUBLIC_DIR}:/data
+    restart: always
+    networks:
+      - default
 
   # Spug - 运维平台
   spug-db:
