@@ -1,5 +1,5 @@
 ARG GO_VERSION
-FROM golang:1.26.1
+FROM golang:1.26.3
 
 ARG TZ
 ARG GOPROXY=https://goproxy.cn,direct
