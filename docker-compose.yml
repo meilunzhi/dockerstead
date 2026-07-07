@@ -32,6 +32,21 @@ services:
       - default
 
 
+#  mw-server:
+#    image: ddsderek/mdserver-web:latest
+#    container_name: mw-server
+#    privileged: true
+#    ports:
+#      - "7200:7200"
+#      - "8400:80"      # 与 nginx 冲突：宿主机的 80 端口已被占用
+#      - "8443:443"    # 与 nginx 冲突：宿主机的 443 端口已被占用
+#      - "8888:8888"
+#    stdin_open: true   # 对应 -i
+#    tty: true          # 对应 -t
+#    restart: unless-stopped
+#    networks:
+#      - default
+
 # ============ 宝塔面板 ============
 #  panel:
 #    image: btpanel/baota:latest
@@ -75,20 +90,31 @@ services:
 #      driver: bridge
 
 
-  it-tools:
-    build:
-      context: ./services/it-tools
-#    image: ghcr.io/corentinth/it-tools:latest
-    image: sharevb/it-tools:latest
-    container_name: it-tools
-    ports:
-      - 8080:8080
-    volumes:
-      - ${SOURCE_DIR}:/www/:rw
-    restart: always
-    networks:
-      - default
+#  it-tools:
+#    build:
+#      context: ./services/it-tools
+#    image: sharevb/it-tools:latest
+#    container_name: it-tools
+#    ports:
+#      - 8081:80
+#    volumes:
+#      - ${SOURCE_DIR}:/www/:rw
+#    restart: always
+#    networks:
+#      - default
 
+#  tools:
+#    build:
+#      context: ./services/tools
+#    image: ghcr.io/corentinth/it-tools:latest
+#    container_name: tools
+#    ports:
+#     - 8080:8080
+#    volumes:
+#      - ${SOURCE_DIR}:/www/:rw
+#    restart: always
+#    networks:
+#      - default
 
 #  openresty:
 #    build:
@@ -148,7 +174,7 @@ services:
     build:
       context: ./services/php84
       args:
-        PHP_VERSION: php:8.4.21-fpm-alpine
+        PHP_VERSION: php:8.4.23-fpm-alpine
         CONTAINER_PACKAGE_URL: ${CONTAINER_PACKAGE_URL}
         COMPOSER_URL: ${COMPOSER_URL}
         PHP_EXTENSIONS: ${PHP84_EXTENSIONS}
@@ -172,7 +198,7 @@ services:
     build:
       context: ./services/php83
       args:
-        PHP_VERSION: php:8.3.31-fpm-alpine
+        PHP_VERSION: php:8.3.32-fpm-alpine
         CONTAINER_PACKAGE_URL: ${CONTAINER_PACKAGE_URL}
         COMPOSER_URL: ${COMPOSER_URL}
         PHP_EXTENSIONS: ${PHP83_EXTENSIONS}
@@ -216,29 +242,29 @@ services:
     networks:
       - default
 
-#  php81:
-#    build:
-#      context: ./services/php81
-#      args:
-#        PHP_VERSION: php:8.1.34-fpm-alpine
-#        CONTAINER_PACKAGE_URL: ${CONTAINER_PACKAGE_URL}
-#        COMPOSER_URL: ${COMPOSER_URL}
-#        PHP_EXTENSIONS: ${PHP81_EXTENSIONS}
-#        TZ: "$TZ"
-#    container_name: php81
-#    expose:
-#      - 9501
-#    volumes:
-#      - ${SOURCE_DIR}:/www/:rw
-#      - ${PHP81_PHP_CONF_FILE}:/usr/local/etc/php/php.ini
-#      - ${PHP81_FPM_CONF_FILE}:/usr/local/etc/php-fpm.d/www.conf
-#      - ${PHP81_LOG_DIR}:/var/log/php
-#      - ${PHP81_DATA_COMPOSER}:/tmp/composer
-#    restart: always
-#    cap_add:
-#      - SYS_PTRACE
-#    networks:
-#      - default
+  php81:
+    build:
+      context: ./services/php81
+      args:
+        PHP_VERSION: php:8.1.34-fpm-alpine
+        CONTAINER_PACKAGE_URL: ${CONTAINER_PACKAGE_URL}
+        COMPOSER_URL: ${COMPOSER_URL}
+        PHP_EXTENSIONS: ${PHP81_EXTENSIONS}
+        TZ: "$TZ"
+    container_name: php81
+    expose:
+      - 9501
+    volumes:
+      - ${SOURCE_DIR}:/www/:rw
+      - ${PHP81_PHP_CONF_FILE}:/usr/local/etc/php/php.ini
+      - ${PHP81_FPM_CONF_FILE}:/usr/local/etc/php-fpm.d/www.conf
+      - ${PHP81_LOG_DIR}:/var/log/php
+      - ${PHP81_DATA_COMPOSER}:/tmp/composer
+    restart: always
+    cap_add:
+      - SYS_PTRACE
+    networks:
+      - default
 
 #  php80:
 #    build:
@@ -286,6 +312,7 @@ services:
       - ${PHP74_FPM_CONF_FILE}:/usr/local/etc/php-fpm.d/www.conf:rw
       - ${PHP74_LOG_DIR}:/var/log/php
       - ${DATA_DIR}/composer:/tmp/composer
+#      - /www/api/ycsAuto/vendor
     restart: always
     cap_add:
       - SYS_PTRACE

@@ -30,7 +30,7 @@ ENV LD_PRELOAD=/usr/lib/preloadable_libiconv.so
 
 
 # Install composer and change it's cache home
-RUN curl -o /usr/bin/composer https://getcomposer.org/download/2.9.8/composer.phar \
+RUN curl -o /usr/bin/composer https://getcomposer.org/download/2.10.2/composer.phar \
     && chmod +x /usr/bin/composer
 #ENV COMPOSER_HOME=/tmp/composer
 

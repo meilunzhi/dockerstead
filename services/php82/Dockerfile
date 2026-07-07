@@ -1,5 +1,5 @@
 ARG PHP_VERSION
-FROM php:8.2.31-fpm-alpine
+FROM php:8.2.32-fpm-alpine
 
 ARG TZ
 ARG PHP_EXTENSIONS
