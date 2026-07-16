@@ -12,11 +12,11 @@
 # 项目 - 使用本地域名
 # ============================================
 wxapp.api.testing:80 {
-    root * /www/laravel/public
+    root * /www/api/laravel/public
 
     # 启用 pathinfo（关键）
     php_server {
-       root /www/laravel/public
+       root /www/api/laravel/public
        split .php
        env PATH_INFO ""
        env PATH_TRANSLATED ""
