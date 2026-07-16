@@ -208,6 +208,7 @@ services:
       - 9501
     volumes:
       - ${SOURCE_DIR}:/www/:rw
+      - /www/api/bgrf_market/vendor
       - ${PHP83_PHP_CONF_FILE}:/usr/local/etc/php/php.ini
       - ${PHP83_FPM_CONF_FILE}:/usr/local/etc/php-fpm.d/www.conf
       - ${PHP83_LOG_DIR}:/var/log/php
@@ -308,11 +309,11 @@ services:
       - "www.site1.com:172.17.0.1"
     volumes:
       - ${SOURCE_DIR}:/www/:rw
+      - /www/api/ycsAuto/vendor
       - ${PHP74_PHP_CONF_FILE}:/usr/local/etc/php/php.ini:ro
       - ${PHP74_FPM_CONF_FILE}:/usr/local/etc/php-fpm.d/www.conf:rw
       - ${PHP74_LOG_DIR}:/var/log/php
       - ${DATA_DIR}/composer:/tmp/composer
-#      - /www/api/ycsAuto/vendor
     restart: always
     cap_add:
       - SYS_PTRACE
@@ -679,25 +680,25 @@ services:
 #    tty: true
 
   # Python 开发环境
-  python:
-    image: python:${PYTHON_VERSION:-3.12-slim}
-    container_name: python
-    ports:
-      - "${PYTHON_HOST_PORT:-8000}:8000"
-    volumes:
-      - ${SOURCE_DIR}:/www/:rw
-      - ${DATA_DIR}/pip:/root/.cache/pip:rw
-    working_dir: /www
-    environment:
-      TZ: "$TZ"
-      PYTHONUNBUFFERED: "1"
-      PIP_DISABLE_PIP_VERSION_CHECK: "1"
-    command: tail -f /dev/null
-    stdin_open: true
-    tty: true
-    restart: unless-stopped
-    networks:
-      - default
+#  python:
+#    image: python:${PYTHON_VERSION:-3.12-slim}
+#    container_name: python
+#    ports:
+#      - "${PYTHON_HOST_PORT:-8000}:8000"
+#    volumes:
+#      - ${SOURCE_DIR}:/www/:rw
+#      - ${DATA_DIR}/pip:/root/.cache/pip:rw
+#    working_dir: /www
+#    environment:
+#      TZ: "$TZ"
+#      PYTHONUNBUFFERED: "1"
+#      PIP_DISABLE_PIP_VERSION_CHECK: "1"
+#    command: tail -f /dev/null
+#    stdin_open: true
+#    tty: true
+#    restart: unless-stopped
+#    networks:
+#      - default
 
 #  go:
 #    build:
