@@ -1,4 +1,4 @@
-FROM dunglas/frankenphp:1.12.1-php8.4
+FROM dunglas/frankenphp:1.12.4-php8.4
 
 # 设置时区
 ENV TZ=Asia/Shanghai

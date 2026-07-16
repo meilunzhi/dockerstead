@@ -773,7 +773,7 @@ services:
       - "${FRANKENPHP83_HTTPS_PORT}:443"
       - "${FRANKENPHP83_ADMIN_PORT}:8023"
     volumes:
-      - ${SOURCE_DIR}:/api/:rw
+      - ${SOURCE_DIR}:/www/:rw
       - ${FRANKENPHP83_CADDYFILE}:/etc/caddy/Caddyfile:ro
       - ${FRANKENPHP83_DATA_DIR}:/data/caddy:rw
       - ${FRANKENPHP83_LOG_DIR}:/var/log/caddy:rw

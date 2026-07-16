@@ -1,60 +1,59 @@
-# Caddyfile
 {
-    frankenphp
-    https_port 443
-    http_port 80
-    auto_https off
-    # 生产环境关闭 debug off
-     debug on
+	frankenphp
+	https_port 443
+	http_port 80
+	auto_https off
+	# 生产环境关闭 debug
+	debug on
 }
 
 # ============================================
 # 项目 - 使用本地域名
 # ============================================
-wxapp.api.testing:80 {
-    root * /www/api/laravel/public
+franken-api.bgrf-market.testing:80 {
+	root * /www/api/bgrf_market/public
 
-    # 启用 pathinfo（关键）
-    php_server {
-       root /www/api/laravel/public
-       split .php
-       env PATH_INFO ""
-       env PATH_TRANSLATED ""
-   }
+	# 启用 pathinfo（关键）
+	php_server {
+		root /www/api/bgrf_market/public
+		split .php
+		env PATH_INFO ""
+		env PATH_TRANSLATED ""
+	}
 
-    encode gzip zstd
+	encode gzip zstd
 
-    # 安全头
-    header {
-       X-Frame-Options "SAMEORIGIN"
-       X-Content-Type-Options "nosniff"
-       X-XSS-Protection "1; mode=block"
-       Referrer-Policy "strict-origin-when-cross-origin"
-       Permissions-Policy "accelerometer=(), camera=(), geolocation=(), gyroscope=(), magnetometer=(), microphone=(), payment=(), usb=()"
-   }
+	# 安全头
+	header {
+		X-Frame-Options "SAMEORIGIN"
+		X-Content-Type-Options "nosniff"
+		X-XSS-Protection "1; mode=block"
+		Referrer-Policy "strict-origin-when-cross-origin"
+		Permissions-Policy "accelerometer=(), camera=(), geolocation=(), gyroscope=(), magnetometer=(), microphone=(), payment=(), usb=()"
+	}
 
-    # CORS（如果需要）
-    # @OPTIONS method OPTIONS
-    # respond @OPTIONS 204
+	# CORS（如果需要）
+	# @OPTIONS method OPTIONS
+	# respond @OPTIONS 204
 
-    # 缓存静态资源
-    @static {
-        file
-        path *.css *.js *.png *.jpg *.jpeg *.gif *.ico *.svg *.woff *.woff2 *.ttf *.eot
-    }
-    handle @static {
-        encode gzip
-        file_server
-    }
+	# 缓存静态资源
+	@static {
+		file
+		path *.css *.js *.png *.jpg *.jpeg *.gif *.ico *.svg *.woff *.woff2 *.ttf *.eot
+	}
+	handle @static {
+		encode gzip
+		file_server
+	}
 
-    # 其他请求交给 Laravel
-    handle {
-       try_files {uri} /index.php?{query}
-    }
+	# 其他请求交给 Laravel
+	handle {
+		try_files {uri} /index.php?{query}
+	}
 
-    # 日志
-    log {
-        output file /var/log/caddy/access.log
-        level DEBUG
-    }
+	# 日志
+	log {
+		output file /var/log/caddy/access.log
+		level DEBUG
+	}
 }
