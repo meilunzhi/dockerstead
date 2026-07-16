@@ -51,12 +51,12 @@ services:
 #  panel:
 #    image: btpanel/baota:latest
 #    ports:
-#      - "38888:8888"
-#      - "8088:80"
-#      - "8443:443"
-#      - "33306:3306"
-#      - "22022:22"
-#      - "32888:888"
+#      - "38888:8888" # 宝塔面板对外访问端口，默认38888
+#      - "8080:80" # Web服务端口，默认8080
+#      - "8443:443" # HTTPS服务端口，默认8443
+#      - "33306:3306" # MySQL服务端口，默认33306，不需要暴露到容器外可删除
+#      - "22022:22" # SSH服务端口，默认22022，不需要暴露到容器外可删除
+#      - "32888:888" # PHPMyAdmin服务端口，默认32888，不需要暴露到容器外可删除
 #    volumes:
 #      - ${SOURCE_DIR}:/www/:rw
 #    labels:
@@ -764,24 +764,25 @@ services:
 #    networks:
 #      - default
 
-#  frankenphp83:
-#    build:
-#      context: ./services/frankenphp/php83
-#    container_name: frankenphp83
-#    ports:
-#      - "${FRANKENPHP83_HTTP_PORT}:80"
-#      - "${FRANKENPHP83_HTTPS_PORT}:443"
-#      - "${FRANKENPHP83_ADMIN_PORT}:8023"
-#    volumes:
-#      - ${SOURCE_DIR}:/www/:rw
-#      - ${FRANKENPHP83_CADDYFILE}:/etc/caddy/Caddyfile:ro
-#      - ${FRANKENPHP83_DATA_DIR}:/data/caddy:rw
-#      - ${FRANKENPHP83_LOG_DIR}:/var/log/caddy:rw
-#    environment:
-#      TZ: "$TZ"
-#    restart: always
-#    networks:
-#      - default
+  frankenphp83:
+    build:
+      context: ./services/frankenphp/php83
+    container_name: frankenphp83
+    ports:
+      - "${FRANKENPHP83_HTTP_PORT}:80"
+      - "${FRANKENPHP83_HTTPS_PORT}:443"
+      - "${FRANKENPHP83_ADMIN_PORT}:8023"
+    volumes:
+      - ${SOURCE_DIR}:/www/:rw
+      - ${SOURCE_DIR}/api/laravel:/www/laravel:rw
+      - ${FRANKENPHP83_CADDYFILE}:/etc/caddy/Caddyfile:ro
+      - ${FRANKENPHP83_DATA_DIR}:/data/caddy:rw
+      - ${FRANKENPHP83_LOG_DIR}:/var/log/caddy:rw
+    environment:
+      TZ: "$TZ"
+    restart: always
+    networks:
+      - default
 
   # FrankenPHP82
 #  frankenphp82:
@@ -803,29 +804,24 @@ services:
 #    networks:
 #      - default
 
-#  1panel:
-#    build:
-#      context: ./services/1panel
-#    container_name: 1panel
-#    restart: always
-#    ports:
-#      - "${PANEL_HOST_PORT}:${PANEL_HOST_PORT}"
-#    volumes:
-#      - /var/run/docker.sock:/var/run/docker.sock
-#      - ${PANEL_SOURCE_DIR}:/www/:rw
-#      - ${PANEL_APP_DIR}:/var/lib/docker
-#      - ${PANEL_LOG_DIR}:/var/log/go/:rw
-#      - ${PANEL_OPT_DIR}:/opt
-#    environment:
-#      TZ: "$TZ"
-#      PANEL_USERNAME: "${PANEL_USERNAME}"
-#      PANEL_PASSWORD: "${PANEL_PASSWORD}"
-#      PANEL_ENTRANCE: "${PANEL_ENTRANCE}"
-#      PANEL_BASE_DIR: "${PANEL_BASE_DIR}"
-#    labels:
-#      createdBy: "Apps"
-#    networks:
-#      - default
+  1panel:
+    image: moelin/1panel:v2
+#    image: moelin/1panel:global-v2
+    container_name: 1panel-v2
+    restart: always
+    network_mode: host
+    volumes:
+      - ${SOURCE_DIR}:/www/:rw
+      - /opt:/opt
+    environment:
+      - TZ=Asia/Shanghai
+      - PORT=10086
+      - USERNAME=admin
+      - PASSWORD=your_secure_password
+      - ENTRANCE=myentrance
+      - BASE_DIR=/opt
+    labels:
+      createdBy: Apps
 
 #  supervisor:
 #    build:
