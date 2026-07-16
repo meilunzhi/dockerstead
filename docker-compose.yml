@@ -774,6 +774,7 @@ services:
       - "${FRANKENPHP83_ADMIN_PORT}:8023"
     volumes:
       - ${SOURCE_DIR}:/www/:rw
+      - /www/api/bgrf_market/vendor
       - ${FRANKENPHP83_CADDYFILE}:/etc/caddy/Caddyfile:ro
       - ${FRANKENPHP83_DATA_DIR}:/data/caddy:rw
       - ${FRANKENPHP83_LOG_DIR}:/var/log/caddy:rw
@@ -803,24 +804,24 @@ services:
 #    networks:
 #      - default
 
-  1panel:
-    image: moelin/1panel:v2
-#    image: moelin/1panel:global-v2
-    container_name: 1panel-v2
-    restart: always
-    network_mode: host
-    volumes:
-      - ${SOURCE_DIR}:/www/:rw
-      - /opt:/opt
-    environment:
-      - TZ=Asia/Shanghai
-      - PORT=10086
-      - USERNAME=admin
-      - PASSWORD=your_secure_password
-      - ENTRANCE=myentrance
-      - BASE_DIR=/opt
-    labels:
-      createdBy: Apps
+#  1panel:
+#    image: moelin/1panel:v2
+##    image: moelin/1panel:global-v2
+#    container_name: 1panel-v2
+#    restart: always
+#    network_mode: host
+#    volumes:
+#      - ${SOURCE_DIR}:/www/:rw
+#      - /opt:/opt
+#    environment:
+#      - TZ=Asia/Shanghai
+#      - PORT=10086
+#      - USERNAME=admin
+#      - PASSWORD=your_secure_password
+#      - ENTRANCE=myentrance
+#      - BASE_DIR=/opt
+#    labels:
+#      createdBy: Apps
 
 #  supervisor:
 #    build:

@@ -14,7 +14,13 @@ RUN install-php-extensions \
     mongodb \
     memcached \
     memcache \
-    xdebug
+    xdebug \
+    bcmath \
+    exif \
+    intl \
+    mysqli \
+    opcache \
+    imagick
 
 RUN mkdir -p /var/log/php \
     && { \
