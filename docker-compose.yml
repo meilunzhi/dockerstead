@@ -17,79 +17,7 @@ services:
     restart: always
     networks:
       - default
-
-#  showdoc:
-#    image: star7th/showdoc:latest
-#    container_name: showdoc
-#    restart: always
-#    ports:
-#      - "4999:80"
-#    volumes:
-#      - /showdoc_data/html:/var/www/html/
-#    environment:
-#      - TZ=Asia/Shanghai
-#    networks:
-#      - default
-
-
-#  mw-server:
-#    image: ddsderek/mdserver-web:latest
-#    container_name: mw-server
-#    privileged: true
-#    ports:
-#      - "7200:7200"
-#      - "8400:80"      # 与 nginx 冲突：宿主机的 80 端口已被占用
-#      - "8443:443"    # 与 nginx 冲突：宿主机的 443 端口已被占用
-#      - "8888:8888"
-#    stdin_open: true   # 对应 -i
-#    tty: true          # 对应 -t
-#    restart: unless-stopped
-#    networks:
-#      - default
-
-# ============ 宝塔面板 ============
-#  panel:
-#    image: btpanel/baota:latest
-#    ports:
-#      - "38888:8888" # 宝塔面板对外访问端口，默认38888
-#      - "8080:80" # Web服务端口，默认8080
-#      - "8443:443" # HTTPS服务端口，默认8443
-#      - "33306:3306" # MySQL服务端口，默认33306，不需要暴露到容器外可删除
-#      - "22022:22" # SSH服务端口，默认22022，不需要暴露到容器外可删除
-#      - "32888:888" # PHPMyAdmin服务端口，默认32888，不需要暴露到容器外可删除
-#    volumes:
-#      - ${SOURCE_DIR}:/www/:rw
-#    labels:
-#      createdBy: "bt_apps"
-#    networks:
-#      - default
-#    restart: always
-
-
-#  openproject:
-#    image: openproject/openproject:17.4.0
-#    container_name: openproject
-#    restart: always
-#    ports:
-#      - "8080:80"
-#    environment:
-#      - OPENPROJECT_SECRET_KEY_BASE=your_secret_key_here
-#      - OPENPROJECT_HOST__NAME=localhost:8080
-#      - OPENPROJECT_HTTPS=false
-#      - OPENPROJECT_DEFAULT__LANGUAGE=zh
-#    volumes:
-#      - openproject-data:/var/lib/openproject
-#    networks:
-#      - default
-#  volumes:
-#    openproject-data:
-#      driver: local
-#  networks:
-#    default:
-#      name: app-network
-#      driver: bridge
-
-
+#it-tools
   it-tools:
     build:
       context: ./services/it-tools
@@ -102,98 +30,51 @@ services:
     restart: always
     networks:
       - default
-
-#  tools:
-#    build:
-#      context: ./services/tools
-#    image: ghcr.io/corentinth/it-tools:latest
-#    container_name: tools
-#    ports:
-#     - 8080:8080
-#    volumes:
-#      - ${SOURCE_DIR}:/www/:rw
-#    restart: always
-#    networks:
-#      - default
-
-#  openresty:
-#    build:
-#      context: ./services/openresty
-#    container_name: openresty
-#    ports:
-#       - "${OPENRESTY_HTTP_HOST_PORT}:80"
-#       - "${OPENRESTY_HTTPS_HOST_PORT}:443"
-#    volumes:
-#       - ${SOURCE_DIR}:/www/:rw
-#       - ${OPENRESTY_CONFD_DIR}:/etc/nginx/conf.d/:ro
-#       - ${OPENRESTY_SSL_CERTIFICATE_DIR}:/ssl:rw
-#       - ${OPENRESTY_CONF_FILE}:/usr/local/openresty/nginx/conf/nginx.conf:ro
-#       - ${OPENRESTY_FASTCGI_PHP_CONF}:/usr/local/openresty/nginx/conf/fastcgi-php.conf:ro
-#       - ${OPENRESTY_CONF_FASTCGIPARAMS_FILE}:/usr/local/openresty/nginx/conf/fastcgi_params:ro
-#       - ${OPENRESTY_LOG_DIR}:/var/log/nginx/:rw
-#    environment:
-#      TZ: "$TZ"
-#    networks:
-#      - default
-
-#  gm-service:
-#    image: docker-rep.gmssh.com/gmssh/gs-main-x86:latest
-#    container_name: gm-service-latest
-#    ports:
-#      - "8090:80"
-#    restart: always
-#    pull_policy: always  # 始终拉取最新镜像
-#    networks:
-#        - default
-
-#  php85:
-#    build:
-#      context: ./services/php85
-#      args:
-#        PHP_VERSION: php:8.5.6-fpm-alpine
-#        CONTAINER_PACKAGE_URL: ${CONTAINER_PACKAGE_URL}
-#        COMPOSER_URL: ${COMPOSER_URL}
-#        PHP_EXTENSIONS: ${PHP85_EXTENSIONS}
-#        TZ: "$TZ"
-#    container_name: php85
-#    expose:
-#      - 9501
-#    volumes:
-#      - ${SOURCE_DIR}:/www/:rw
-#      - ${PHP85_PHP_CONF_FILE}:/usr/local/etc/php/php.ini
-#      - ${PHP85_FPM_CONF_FILE}:/usr/local/etc/php-fpm.d/www.conf
-#      - ${PHP85_LOG_DIR}:/var/log/php
-#      - ${PHP85_DATA_COMPOSER}:/tmp/composer
-#    restart: always
-#    cap_add:
-#      - SYS_PTRACE
-#    networks:
-#      - default
-
-#  php84:
-#    build:
-#      context: ./services/php84
-#      args:
-#        PHP_VERSION: php:8.4.23-fpm-alpine
-#        CONTAINER_PACKAGE_URL: ${CONTAINER_PACKAGE_URL}
-#        COMPOSER_URL: ${COMPOSER_URL}
-#        PHP_EXTENSIONS: ${PHP84_EXTENSIONS}
-#        TZ: "$TZ"
-#    container_name: php84
-#    expose:
-#      - 9501
-#    volumes:
-#      - ${SOURCE_DIR}:/www/:rw
-#      - ${PHP84_PHP_CONF_FILE}:/usr/local/etc/php/php.ini
-#      - ${PHP84_FPM_CONF_FILE}:/usr/local/etc/php-fpm.d/www.conf
-#      - ${PHP84_LOG_DIR}:/var/log/php
-#      - ${PHP84_DATA_COMPOSER}:/tmp/composer
-#    restart: always
-#    cap_add:
-#      - SYS_PTRACE
-#    networks:
-#        - default
-
+#FrankenPHP83
+  frankenphp83:
+    build:
+      context: ./services/frankenphp/php83
+    container_name: frankenphp83
+    ports:
+      - "${FRANKENPHP83_HTTP_PORT}:80"
+      - "${FRANKENPHP83_HTTPS_PORT}:443"
+      - "${FRANKENPHP83_ADMIN_PORT}:8023"
+    volumes:
+      - ${SOURCE_DIR}:/www/:rw
+      - /www/api/bgrf_market/vendor
+      - ${FRANKENPHP83_CADDYFILE}:/etc/caddy/Caddyfile:ro
+      - ${FRANKENPHP83_DATA_DIR}:/data/caddy:rw
+      - ${FRANKENPHP83_LOG_DIR}:/var/log/caddy:rw
+    environment:
+      TZ: "$TZ"
+    restart: always
+    networks:
+      - default
+#PHP84
+  php84:
+    build:
+      context: ./services/php84
+      args:
+        PHP_VERSION: php:8.4.23-fpm-alpine
+        CONTAINER_PACKAGE_URL: ${CONTAINER_PACKAGE_URL}
+        COMPOSER_URL: ${COMPOSER_URL}
+        PHP_EXTENSIONS: ${PHP84_EXTENSIONS}
+        TZ: "$TZ"
+    container_name: php84
+    expose:
+      - 9501
+    volumes:
+      - ${SOURCE_DIR}:/www/:rw
+      - ${PHP84_PHP_CONF_FILE}:/usr/local/etc/php/php.ini
+      - ${PHP84_FPM_CONF_FILE}:/usr/local/etc/php-fpm.d/www.conf
+      - ${PHP84_LOG_DIR}:/var/log/php
+      - ${PHP84_DATA_COMPOSER}:/tmp/composer
+    restart: always
+    cap_add:
+      - SYS_PTRACE
+    networks:
+        - default
+#PHP83
   php83:
     build:
       context: ./services/php83
@@ -218,81 +99,7 @@ services:
       - SYS_PTRACE
     networks:
         - default
-
-#  php82:
-#    build:
-#      context: ./services/php82
-#      args:
-#        PHP_VERSION: php:8.2.31-fpm-alpine
-#        CONTAINER_PACKAGE_URL: ${CONTAINER_PACKAGE_URL}
-#        COMPOSER_URL: ${COMPOSER_URL}
-#        PHP_EXTENSIONS: ${PHP82_EXTENSIONS}
-#        TZ: "$TZ"
-#    container_name: php82
-#    expose:
-#      - 9501
-#    volumes:
-#      - ${SOURCE_DIR}:/www/:rw
-#      - ${PHP82_PHP_CONF_FILE}:/usr/local/etc/php/php.ini
-#      - ${PHP82_FPM_CONF_FILE}:/usr/local/etc/php-fpm.d/www.conf
-#      - ${PHP82_LOG_DIR}:/var/log/php
-#      - ${PHP82_DATA_COMPOSER}:/tmp/composer
-#    restart: always
-#    cap_add:
-#      - SYS_PTRACE
-#    networks:
-#      - default
-
-#  php81:
-#    build:
-#      context: ./services/php81
-#      args:
-#        PHP_VERSION: php:8.1.34-fpm-alpine
-#        CONTAINER_PACKAGE_URL: ${CONTAINER_PACKAGE_URL}
-#        COMPOSER_URL: ${COMPOSER_URL}
-#        PHP_EXTENSIONS: ${PHP81_EXTENSIONS}
-#        TZ: "$TZ"
-#    container_name: php81
-#    expose:
-#      - 9501
-#    volumes:
-#      - ${SOURCE_DIR}:/www/:rw
-#      - ${PHP81_PHP_CONF_FILE}:/usr/local/etc/php/php.ini
-#      - ${PHP81_FPM_CONF_FILE}:/usr/local/etc/php-fpm.d/www.conf
-#      - ${PHP81_LOG_DIR}:/var/log/php
-#      - ${PHP81_DATA_COMPOSER}:/tmp/composer
-#    restart: always
-#    cap_add:
-#      - SYS_PTRACE
-#    networks:
-#      - default
-
-#  php80:
-#    build:
-#      context: ./services/php80
-#      args:
-#        PHP_VERSION: php:8.0.30-fpm-alpine
-#        CONTAINER_PACKAGE_URL: ${CONTAINER_PACKAGE_URL}
-#        COMPOSER_URL: ${COMPOSER_URL}
-#        PHP_EXTENSIONS: ${PHP80_EXTENSIONS}
-#        TZ: "$TZ"
-#    container_name: php80
-#    expose:
-#      - 9501
-#    extra_hosts:
-#      - "www.dockerstead.com:172.17.0.1"
-#    volumes:
-#      - ${SOURCE_DIR}:/www/:rw
-#      - ${PHP82_PHP_CONF_FILE}:/usr/local/etc/php/php.ini
-#      - ${PHP82_FPM_CONF_FILE}:/usr/local/etc/php-fpm.d/www.conf
-#      - ${PHP82_LOG_DIR}:/var/log/php
-#      - ${PHP82_DATA_COMPOSER}:/tmp/composer
-#    restart: always
-#    cap_add:
-#      - SYS_PTRACE
-#    networks:
-#      - default
-
+#PHP74
   php74:
     build:
       context: ./services/php74
@@ -319,26 +126,6 @@ services:
       - SYS_PTRACE
     networks:
       - default
-
-#  postgres:
-#    image: postgres:${POSTGRES_VERSION}
-#    container_name: postgres
-#    ports:
-#      - "${POSTGRES_HOST_PORT}:5432"
-#    volumes:
-#      - ${POSTGRES_CONF_FILE}:/etc/postgres/conf.d/postgres.cnf:ro
-#      - ${DATA_DIR}/postgres:/var/lib/postgres/:rw
-#      - ${POSTGRES_LOG_DIR}:/var/log/postgres/:rw
-#
-#    restart: always
-#    networks:
-#      - default
-#    environment:
-#      POSTGRES_USER: "${POSTGRES_USER}"
-#      POSTGRES_DB: "${POSTGRES_DB}"
-#      POSTGRES_PASSWORD: "${POSTGRES_ROOT_PASSWORD}"
-#      TZ: "$TZ"
-
   # mysql 8.0.46
   mysql:
     image: mysql:${MYSQL_VERSION}
@@ -349,7 +136,6 @@ services:
       - ${MYSQL_CONF_FILE}:/etc/mysql/conf.d/mysql.cnf:ro
       - ${DATA_DIR}/mysql:/var/lib/mysql/:rw
       - ${MYSQL_LOG_DIR}:/var/log/mysql/:rw
-
     restart: always
     networks:
       - default
@@ -357,7 +143,7 @@ services:
       MYSQL_ROOT_PASSWORD: "${MYSQL_ROOT_PASSWORD}"
       MYSQL_ROOT_HOST: "${MYSQL_ROOT_HOST}"
       TZ: "$TZ"
-
+  # mysql 5.7.44
   mysql5:
  #  platform: linux/amd64  # 指定使用 amd64 平台,mac芯片m1-m4需要打开
     image: mysql:${MYSQL5_VERSION}
@@ -368,14 +154,13 @@ services:
       - ${MYSQL5_CONF_FILE}:/etc/mysql/conf.d/mysql.cnf:ro
       - ${DATA_DIR}/mysql5:/var/lib/mysql/:rw
       - ${MYSQL5_LOG_DIR}:/var/log/mysql/:rw
-
     networks:
       - default
     environment:
       MYSQL_ROOT_PASSWORD: "${MYSQL5_ROOT_PASSWORD}"
       MYSQL_ROOT_HOST: "${MYSQL5_ROOT_HOST}"
       TZ: "$TZ"
-
+#Redis
   redis:
     image: redis:${REDIS_VERSION}
     container_name: redis
@@ -390,7 +175,7 @@ services:
       TZ: "$TZ"
     networks:
       - default
-
+#Memcached
   memcached:
     image: memcached:${MEMCACHED_VERSION}
     container_name: memcached
@@ -401,53 +186,7 @@ services:
     networks:
       - default
 
-
-#  rabbitmq:
-#    build:
-#      context: ./services/rabbitmq
-#      args:
-#        RABBITMQ_VERSION: ${RABBITMQ_VERSION}
-#        RABBITMQ_PLUGINS: ${RABBITMQ_PLUGINS}
-#    container_name: rabbitmq
-#    restart: always
-#    ports:
-#      - "${RABBITMQ_HOST_PORT_C}:5672"
-#      - "${RABBITMQ_HOST_PORT_S}:15672"
-#    environment:
-#       TZ: "$TZ"
-#       RABBITMQ_DEFAULT_USER: "${RABBITMQ_DEFAULT_USER}"
-#       RABBITMQ_DEFAULT_PASS: "${RABBITMQ_DEFAULT_PASS}"
-#    networks:
-#          - default
-
-#  phpmyadmin:
-#    image: phpmyadmin/phpmyadmin:latest
-#    container_name: phpmyadmin
-#    ports:
-#      - "${PHPMYADMIN_HOST_PORT}:80"
-#    volumes:
-#      - ${PHPMYADMIN_USER_CONF_FILE}:/etc/phpmyadmin/config.user.inc.php:ro
-#      - ${PHPMYADMIN_PHP_CONF_FILE}:/usr/local/etc/php/conf.d/php-phpmyadmin.ini:ro
-#    networks:
-#      - default
-#    environment:
-#      - PMA_HOST=mysql
-#      - PMA_PORT=3306
-#      - TZ=$TZ
-
-#  phpredisadmin:
-#    image: erikdubbelboer/phpredisadmin:latest
-#    container_name: phpredisadmin
-#    ports:
-#      - "${REDISMYADMIN_HOST_PORT}:80"
-#    networks:
-#      - default
-#    environment:
-#      - REDIS_1_HOST=redis
-#      - REDIS_1_PORT=6379
-#      - TZ=$TZ
-
-    # DPanel - Docker 管理面板
+# DPanel - Docker 管理面板
 #  dpanel:
 #    image: dpanel/dpanel:latest
 #    container_name: dpanel
@@ -480,7 +219,7 @@ services:
 #    networks:
 #      - default
 
-  # Spug - 运维平台
+# Spug - 运维平台
 #  spug-db:
 #    image: mysql:${SPUG_MYSQL_VERSION}
 #    container_name: spug-db
@@ -500,184 +239,8 @@ services:
 #      retries: 10
 #    networks:
 #      - spug-network
-#
-#  spug:
-#    image: openspug/spug-service
-#    container_name: spug
-#    privileged: true
-#    restart: always
-#    volumes:
-#      - ${SPUG_SERVICE_DATA_DIR}:/data/spug
-#      - ${SPUG_REPOS_DIR}:/data/repos
-#    ports:
-#      - "${SPUG_HOST_PORT}:80"
-#    environment:
-#      - MYSQL_DATABASE=${SPUG_MYSQL_DATABASE}
-#      - MYSQL_USER=${SPUG_MYSQL_USER}
-#      - MYSQL_PASSWORD=${SPUG_MYSQL_PASSWORD}
-#      - MYSQL_HOST=spug-db
-#      - MYSQL_PORT=3306
-#    depends_on:
-#      spug-db:
-#        condition: service_healthy
-#    networks:
-#      - spug-network
 
-  # Walle - 瓦力DevOps平台
-#  walle-nginx:
-#    image: alenx/walle-web:2.1
-#    container_name: walle-nginx
-#    hostname: nginx-web
-#    ports:
-#      - "${WALLE_HOST_PORT}:80"
-#    depends_on:
-#      - walle-python
-#    networks:
-#      - walle-net
-#    restart: always
-#
-#  walle-python:
-#    image: alenx/walle-python:2.1
-#    container_name: walle-python
-#    hostname: walle-python
-#    env_file:
-#      - ./services/walle/walle.env
-#    volumes:
-#      - ${WALLE_CODEBASE_DIR}:/tmp/walle/codebase/
-#      - ${WALLE_LOG_DIR}:/opt/walle-web/logs/
-#      - ${WALLE_SSH_DIR}:/root/.ssh/
-#    command: bash -c "cd /opt/walle_home/ && /bin/bash admin.sh migration && python waller.py"
-#    expose:
-#      - "5000"
-#    depends_on:
-#      - walle-mysql
-#    networks:
-#      - walle-net
-#    restart: always
 
-#  walle-mysql:
-#    image: mysql:${WALLE_MYSQL_VERSION}
-#    container_name: walle-mysql
-#    hostname: walle-mysql
-#    env_file:
-#      - ./services/walle/walle.env
-#    command: --default-authentication-plugin=mysql_native_password --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci
-#    ports:
-#      - "${WALLE_MYSQL_PORT}:3306"
-#    expose:
-#      - "3306"
-#    volumes:
-#      - ${WALLE_MYSQL_DATA_DIR}:/var/lib/mysql
-#    networks:
-#      - walle-net
-#    restart: always
-
-# Cockpit - Linux 服务器 Web 管理界面
-#  cockpit:
-##    image: cockpitproject/sockpit:latest
-#    image: cockpithq/cockpit:pro-2.14.0
-#    container_name: cockpit
-#    ports:
-#      - "${COCKPIT_HOST_PORT}:9090"
-#    volumes:
-#      - ${COCKPIT_CONFIG_DIR}:/etc/cockpit:ro
-#      - ${DATA_DIR}/cockpit:/var/lib/cockpit:rw
-#    restart: always
-#    networks:
-#      - default
-#    environment:
-#      TZ: "$TZ"
-
-#  mongodb:
-#    image: mongo:${MONGODB_VERSION}
-#    container_name: mongodb
-#    environment:
-#        MONGO_INITDB_ROOT_USERNAME: "${MONGODB_INITDB_ROOT_USERNAME}"
-#        MONGO_INITDB_ROOT_PASSWORD: "${MONGODB_INITDB_ROOT_PASSWORD}"
-#        TZ: "$TZ"
-#    volumes:
-#      - ${DATA_DIR}/mongo:/data/db:rw
-#      - ${DATA_DIR}/mongo_key:/mongo:rw
-#    ports:
-#       - "${MONGODB_HOST_PORT}:27017"
-#    networks:
-#       - default
-#    command:
-#       --auth
-
-#  adminmongo:
-#    image: mrvautin/adminmongo
-#    container_name: adminmongo
-#    ports:
-#      - "${ADMINMONGO_HOST_PORT}:1234"
-#    environment:
-#      - HOST=0.0.0.0
-#      - DB_HOST=mongodb
-#      - DB_PORT=27017
-#    networks:
-#      - default
-
-#  elasticsearch:
-#    build:
-#      context: ./services/elasticsearch
-#      args:
-#        ELASTICSEARCH_VERSION: ${ELASTICSEARCH_VERSION}
-#        ELASTICSEARCH_PLUGINS: ${ELASTICSEARCH_PLUGINS}
-#    container_name: elasticsearch
-#    environment:
-#      - TZ=$TZ
-#      - discovery.type=single-node
-#      - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
-#    volumes:
-#      - ${DATA_DIR}/esdata:/usr/share/elasticsearch/data
-#      - ${ELASTICSEARCH_CONF_FILE}:/usr/share/elasticsearch/config/elasticsearch.yml
-#      - ${ELASTICSEARCH_JVM_CONF_FILE}:/usr/share/elasticsearch/config/jvm.options
-#      - ${ELASTICSEARCH_LOG4J2_CONF_FILE}:/usr/share/elasticsearch/config/log4j2.properties
-#    hostname: elasticsearch
-#    restart: always
-#    ports:
-#      - "${ELASTICSEARCH_HOST_PORT_C}:9200"
-#      - "${ELASTICSEARCH_HOST_PORT_S}:9300"
-
-#  kibana:
-#    image: kibana:${KIBANA_VERSION}
-#    container_name: kibana
-#    environment:
-#      TZ: "$TZ"
-#      elasticsearch.hosts: http://elasticsearch:9200
-#      I18N_LOCALE: "${KIBANA_I18N_LOCALE}"
-#    hostname: kibana
-#    depends_on:
-#      - elasticsearch
-#    restart: always
-#    ports:
-#      - "${KIBANA_HOST}:5601"
-
-#  logstash:
-#    image: logstash:${LOGSTASH_VERSION}
-#    container_name: logstash
-#    hostname: logstash
-#    restart: always
-#    depends_on:
-#      - elasticsearch
-#    environment:
-#      TZ: "$TZ"
-#    ports:
-#      - "${LOGSTASH_HOST_PORT_C}:9600"
-#      - "${LOGSTASH_HOST_PORT_S}:5044"
-
-#  node:
-#    image: node:${NODE_VERSION}
-#    environment:
-#      - NODE_ENV=production
-#    volumes:
-#      - ${SOURCE_DIR}:/www/:rw
-#    expose:
-#      - "8081"
-#    networks:
-#      - default
-#    stdin_open: true
-#    tty: true
 
   # Python 开发环境
 #  python:
@@ -764,25 +327,25 @@ services:
 #    networks:
 #      - default
 
-  frankenphp83:
-    build:
-      context: ./services/frankenphp/php83
-    container_name: frankenphp83
-    ports:
-      - "${FRANKENPHP83_HTTP_PORT}:80"
-      - "${FRANKENPHP83_HTTPS_PORT}:443"
-      - "${FRANKENPHP83_ADMIN_PORT}:8023"
-    volumes:
-      - ${SOURCE_DIR}:/www/:rw
-      - /www/api/bgrf_market/vendor
-      - ${FRANKENPHP83_CADDYFILE}:/etc/caddy/Caddyfile:ro
-      - ${FRANKENPHP83_DATA_DIR}:/data/caddy:rw
-      - ${FRANKENPHP83_LOG_DIR}:/var/log/caddy:rw
-    environment:
-      TZ: "$TZ"
-    restart: always
-    networks:
-      - default
+#  frankenphp83:
+#    build:
+#      context: ./services/frankenphp/php83
+#    container_name: frankenphp83
+#    ports:
+#      - "${FRANKENPHP83_HTTP_PORT}:80"
+#      - "${FRANKENPHP83_HTTPS_PORT}:443"
+#      - "${FRANKENPHP83_ADMIN_PORT}:8023"
+#    volumes:
+#      - ${SOURCE_DIR}:/www/:rw
+#      - /www/api/bgrf_market/vendor
+#      - ${FRANKENPHP83_CADDYFILE}:/etc/caddy/Caddyfile:ro
+#      - ${FRANKENPHP83_DATA_DIR}:/data/caddy:rw
+#      - ${FRANKENPHP83_LOG_DIR}:/var/log/caddy:rw
+#    environment:
+#      TZ: "$TZ"
+#    restart: always
+#    networks:
+#      - default
 
   # FrankenPHP82
 #  frankenphp82:
