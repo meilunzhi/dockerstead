@@ -1,4 +1,7 @@
 FROM dunglas/frankenphp:1.12.4-php8.3
+
+ARG IPE_PROCESSOR_COUNT=1
+ENV IPE_PROCESSOR_COUNT=${IPE_PROCESSOR_COUNT}
 #FROM dunglas/frankenphp-dev:php8.3
 
 # 设置时区
