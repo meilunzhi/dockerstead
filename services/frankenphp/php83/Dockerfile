@@ -1,4 +1,4 @@
-FROM dunglas/frankenphp:1.12.4-php8.3
+FROM dunglas/frankenphp:1.12.6-php8.3
 
 ARG IPE_PROCESSOR_COUNT=1
 ENV IPE_PROCESSOR_COUNT=${IPE_PROCESSOR_COUNT}

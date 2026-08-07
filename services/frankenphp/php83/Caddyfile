@@ -15,7 +15,7 @@ franken-api.bgrf-market.testing:80 {
 
 	# 启用 pathinfo（关键）
 	php_server {
-		root /www/api/bgrf_market/public
+		root /www/api/api_bgrf_market/public
 		split .php
 		env PATH_INFO ""
 		env PATH_TRANSLATED ""

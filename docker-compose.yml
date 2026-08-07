@@ -220,26 +220,48 @@ services:
 #      - default
 
 # Spug - 运维平台
-#  spug-db:
-#    image: mysql:${SPUG_MYSQL_VERSION}
-#    container_name: spug-db
-#    restart: always
-#    command: --port 3306 --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci
-#    volumes:
-#      - ${SPUG_MYSQL_DATA_DIR}:/var/lib/mysql
-#    environment:
-#      - MYSQL_DATABASE=${SPUG_MYSQL_DATABASE}
-#      - MYSQL_USER=${SPUG_MYSQL_USER}
-#      - MYSQL_PASSWORD=${SPUG_MYSQL_PASSWORD}
-#      - MYSQL_ROOT_PASSWORD=${SPUG_MYSQL_ROOT_PASSWORD}
-#    healthcheck:
-#      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
-#      interval: 5s
-#      timeout: 3s
-#      retries: 10
-#    networks:
-#      - spug-network
+  spug-db:
+    image: mysql:${SPUG_MYSQL_VERSION}
+    container_name: spug-db
+    restart: always
+    command: --port 3306 --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci
+    volumes:
+      - ${SPUG_MYSQL_DATA_DIR}:/var/lib/mysql
+    environment:
+      - MYSQL_DATABASE=${SPUG_MYSQL_DATABASE}
+      - MYSQL_USER=${SPUG_MYSQL_USER}
+      - MYSQL_PASSWORD=${SPUG_MYSQL_PASSWORD}
+      - MYSQL_ROOT_PASSWORD=${SPUG_MYSQL_ROOT_PASSWORD}
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+      interval: 5s
+      timeout: 3s
+      retries: 10
+    networks:
+      - spug-network
 
+  spug:
+#    image: openspug/spug-service
+    image: registry.cn-hangzhou.aliyuncs.com/openspug/spug-service
+    container_name: spug
+    privileged: true
+    restart: always
+    volumes:
+      - ${SPUG_SERVICE_DATA_DIR}:/data/spug
+      - ${SPUG_REPOS_DIR}:/data/repos
+    ports:
+      - "${SPUG_HOST_PORT}:80"
+    environment:
+      - MYSQL_DATABASE=${SPUG_MYSQL_DATABASE}
+      - MYSQL_USER=${SPUG_MYSQL_USER}
+      - MYSQL_PASSWORD=${SPUG_MYSQL_PASSWORD}
+      - MYSQL_HOST=spug-db
+      - MYSQL_PORT=3306
+    depends_on:
+      spug-db:
+        condition: service_healthy
+    networks:
+      - spug-network
 
 
   # Python 开发环境
