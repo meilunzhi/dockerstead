@@ -17,6 +17,27 @@ services:
     restart: always
     networks:
       - default
+
+#  openresty:
+#    build:
+#      context: ./services/openresty
+#    container_name: openresty
+#    ports:
+#       - "${OPENRESTY_HTTP_HOST_PORT}:80"
+#       - "${OPENRESTY_HTTPS_HOST_PORT}:443"
+#    volumes:
+#       - ${SOURCE_DIR}:/www/:rw
+#       - ${OPENRESTY_CONFD_DIR}:/etc/nginx/conf.d/:ro
+#       - ${OPENRESTY_SSL_CERTIFICATE_DIR}:/ssl:rw
+#       - ${OPENRESTY_CONF_FILE}:/usr/local/openresty/nginx/conf/nginx.conf:ro
+#       - ${OPENRESTY_FASTCGI_PHP_CONF}:/usr/local/openresty/nginx/conf/fastcgi-php.conf:ro
+#       - ${OPENRESTY_CONF_FASTCGIPARAMS_FILE}:/usr/local/openresty/nginx/conf/fastcgi_params:ro
+#       - ${OPENRESTY_LOG_DIR}:/var/log/nginx/:rw
+#    environment:
+#      TZ: "$TZ"
+#    networks:
+#      - default
+
 #it-tools
   it-tools:
     build:
@@ -55,7 +76,7 @@ services:
     build:
       context: ./services/php84
       args:
-        PHP_VERSION: php:8.4.23-fpm-alpine
+        PHP_VERSION: php:8.4.24-fpm-alpine
         CONTAINER_PACKAGE_URL: ${CONTAINER_PACKAGE_URL}
         COMPOSER_URL: ${COMPOSER_URL}
         PHP_EXTENSIONS: ${PHP84_EXTENSIONS}
@@ -79,7 +100,7 @@ services:
     build:
       context: ./services/php83
       args:
-        PHP_VERSION: php:8.3.32-fpm-alpine
+        PHP_VERSION: php:8.3.33-fpm-alpine
         CONTAINER_PACKAGE_URL: ${CONTAINER_PACKAGE_URL}
         COMPOSER_URL: ${COMPOSER_URL}
         PHP_EXTENSIONS: ${PHP83_EXTENSIONS}
@@ -187,22 +208,22 @@ services:
       - default
 
 # DPanel - Docker 管理面板
-#  dpanel:
-#    image: dpanel/dpanel:latest
-#    container_name: dpanel
-#    restart: always
-#    ports:
-#      - "${DPANEL_HTTP_PORT}:80"
-#      - "${DPANEL_HTTPS_PORT}:443"
-#      - "${DPANEL_ADMIN_PORT}:8080"
-#    volumes:
-#      - /var/run/docker.sock:/var/run/docker.sock
-#      - ${DPANEL_DATA_DIR}:/dpanel
-#    environment:
-#      APP_NAME: dpanel
-#      TZ: "$TZ"
-#    networks:
-#      - default
+  dpanel:
+    image: dpanel/dpanel:latest
+    container_name: dpanel
+    restart: always
+    ports:
+      - "${DPANEL_HTTP_PORT}:80"
+      - "${DPANEL_HTTPS_PORT}:443"
+      - "${DPANEL_ADMIN_PORT}:8080"
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - ${DPANEL_DATA_DIR}:/dpanel
+    environment:
+      APP_NAME: dpanel
+      TZ: "$TZ"
+    networks:
+      - default
 
   # Portainer - Docker 容器管理界面
 #  portainer:
@@ -265,52 +286,56 @@ services:
 
 
   # Python 开发环境
-#  python:
-#    image: python:${PYTHON_VERSION:-3.12-slim}
-#    container_name: python
-#    ports:
-#      - "${PYTHON_HOST_PORT:-8000}:8000"
-#    volumes:
-#      - ${SOURCE_DIR}:/www/:rw
-#      - ${DATA_DIR}/pip:/root/.cache/pip:rw
-#    working_dir: /www
-#    environment:
-#      TZ: "$TZ"
-#      PYTHONUNBUFFERED: "1"
-#      PIP_DISABLE_PIP_VERSION_CHECK: "1"
-#    command: tail -f /dev/null
-#    stdin_open: true
-#    tty: true
-#    restart: unless-stopped
-#    networks:
-#      - default
+  python:
+    build:
+      context: ./services/python
+      args:
+        PY_VERSION: ${PY_VERSION}
+        TZ: "$TZ"
+    container_name: python
+    expose:
+      - "8000"
+    ports:
+      - "${PY_HOST_PORT}:8000"
+    volumes:
+      - ${SOURCE_DIR}:/www/:rw
+      - ${PY_APP_DIR}:/www/pyapp/:rw
+      - ${PY_LOG_DIR}:/var/log/python/:rw
+      - ${DATA_DIR}/pip:/root/.cache/pip:rw
+    working_dir: /www
+    command: tail -f /dev/null
+    stdin_open: true
+    tty: true
+    restart: unless-stopped
+    networks:
+      - default
 
-#  go:
-#    build:
-#      context: ./services/go
-#      args:
-#        GO_VERSION: ${GO_VERSION}
-#        TZ: "$TZ"
-#        GOPROXY: "${GO_PROXY}"
-#    container_name: go
-#    expose:
-#      - "9100"
-#    ports:
-#      - "${GO_HOST_PORT}:9100"
-#    volumes:
-#      - ${SOURCE_DIR}:/www/:rw
-#      - ${GO_APP_DIR}:/www/goapp/:rw
-#      - ${GO_LOG_DIR}:/var/log/go/:rw
-#    working_dir: /www
-#    stdin_open: true
-#    tty: true
-#    restart: always
-#    networks:
-#      - default
-#    depends_on:
-#      - nginx
+  go:
+    build:
+      context: ./services/go
+      args:
+        GO_VERSION: ${GO_VERSION}
+        TZ: "$TZ"
+        GOPROXY: "${GO_PROXY}"
+    container_name: go
+    expose:
+      - "9100"
+    ports:
+      - "${GO_HOST_PORT}:9100"
+    volumes:
+      - ${SOURCE_DIR}:/www/:rw
+      - ${GO_APP_DIR}:/www/goapp/:rw
+      - ${GO_LOG_DIR}:/var/log/go/:rw
+    working_dir: /www
+    stdin_open: true
+    tty: true
+    restart: always
+    networks:
+      - default
+    depends_on:
+      - nginx
 
-  # FrankenPHP - 现代 PHP 应用程序服务器 (多版本)
+# FrankenPHP - 现代 PHP 应用程序服务器 (多版本)
 #  frankenphp85:
 #    build:
 #      context: ./services/frankenphp/php85
@@ -369,7 +394,7 @@ services:
 #    networks:
 #      - default
 
-  # FrankenPHP82
+# FrankenPHP82
 #  frankenphp82:
 #    build:
 #      context: ./services/frankenphp/php82

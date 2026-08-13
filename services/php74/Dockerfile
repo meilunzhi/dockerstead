@@ -28,17 +28,17 @@ RUN apk --no-cache add tzdata \
 RUN apk add --no-cache --repository=https://dl-cdn.alpinelinux.org/alpine/v3.24/community gnu-libiconv
 ENV LD_PRELOAD=/usr/lib/preloadable_libiconv.so
 
-RUN apt-get update && apt-get install -y \
-    zsh \
-    git \
-    curl \
-    && rm -rf /var/lib/apt/lists/*
-
-# 2. 安装 Oh My Zsh (非交互式安装)
-RUN sh -c "$(curl -fsSL https://githubusercontent.com)" "" --unattended
-
-# 3. 将 root 用户的默认 shell 改为 zsh
-RUN chsh -s $(which zsh)
+#RUN apt-get update && apt-get install -y \
+#    zsh \
+#    git \
+#    curl \
+#    && rm -rf /var/lib/apt/lists/*
+#
+## 2. 安装 Oh My Zsh (非交互式安装)
+#RUN sh -c "$(curl -fsSL https://githubusercontent.com)" "" --unattended
+#
+## 3. 将 root 用户的默认 shell 改为 zsh
+#RUN chsh -s $(which zsh)
 
 # Install composer and change it's cache home
 RUN curl -o /usr/bin/composer https://getcomposer.org/download/2.10.2/composer.phar \
